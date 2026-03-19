@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrzej Jankowski — Ekspert AI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;600;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #1a1a1a;
+            --white: #f5f0e8;
+            --yellow: #FFD600;
+            --blue: #3344FF;
+            --red: #FF3344;
+            --green: #00CC66;
+            --border: 3px solid var(--black);
+            --shadow: 6px 6px 0px var(--black);
+            --shadow-hover: 8px 8px 0px var(--black);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        /* ---- NAV ---- */
+        nav {
+            border-bottom: var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--yellow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .logo {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            border: 2px solid transparent;
+            transition: all 0.1s;
+        }
+
+        nav a:hover {
+            border: 2px solid var(--black);
+            background: var(--white);
+        }
+
+        /* ---- HERO ---- */
+        .hero {
+            border-bottom: var(--border);
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-text h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: 3.5rem;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text h1 .highlight {
+            background: var(--yellow);
+            padding: 0 0.3rem;
+            border: var(--border);
+            display: inline;
+        }
+
+        .hero-text p {
+            font-size: 1.15rem;
+            max-width: 520px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-badge {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .badge-box {
+            background: var(--black);
+            color: var(--yellow);
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            padding: 2.5rem;
+            border: var(--border);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transform: rotate(2deg);
+            max-width: 380px;
+        }
+
+        .badge-box .number {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1;
+            display: block;
+            color: var(--yellow);
+        }
+
+        .badge-box .label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+            display: block;
+            color: var(--white);
+        }
+
+        /* ---- SECTIONS ---- */
+        section {
+            border-bottom: var(--border);
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border: var(--border);
+            background: var(--yellow);
+        }
+
+        /* ---- ABOUT CARDS ---- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            border: var(--border);
+            padding: 2rem;
+            background: #fff;
+            box-shadow: var(--shadow);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            background: var(--black);
+            color: var(--yellow);
+            padding: 0.2rem 0.6rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        /* ---- EXPERTISE ---- */
+        .expertise-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .expertise-item {
+            border: var(--border);
+            padding: 1rem 1.5rem;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            background: #fff;
+            box-shadow: 4px 4px 0px var(--black);
+            transition: all 0.1s;
+            cursor: default;
+        }
+
+        .expertise-item:nth-child(odd) {
+            background: var(--yellow);
+        }
+
+        .expertise-item:nth-child(3n) {
+            transform: rotate(-1deg);
+        }
+
+        .expertise-item:nth-child(3n+1) {
+            transform: rotate(0.5deg);
+        }
+
+        .expertise-item:hover {
+            transform: rotate(0deg) translate(-2px, -2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* ---- PROJECTS ---- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            border: var(--border);
+            padding: 2rem;
+            background: #fff;
+            box-shadow: var(--shadow);
+            transition: transform 0.15s, box-shadow 0.15s;
+            text-decoration: none;
+            color: var(--black);
+            display: block;
+        }
+
+        .project-card:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: var(--shadow-hover);
+            background: var(--yellow);
+        }
+
+        .project-card .project-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .project-card h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card .project-url {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--blue);
+            text-decoration: underline;
+            display: block;
+            margin-top: 0.75rem;
+        }
+
+        .project-card p {
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        /* ---- TRAINING ---- */
+        .training-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .training-item {
+            border: var(--border);
+            padding: 1.5rem 2rem;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 4px 4px 0px var(--black);
+        }
+
+        .training-item .marker {
+            font-family: 'Space Mono', monospace;
+            font-weight: 900;
+            font-size: 1.5rem;
+            background: var(--blue);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 2px solid var(--black);
+        }
+
+        .training-item:nth-child(even) .marker {
+            background: var(--red);
+        }
+
+        .training-item:nth-child(3n) .marker {
+            background: var(--green);
+        }
+
+        .training-item p {
+            font-size: 0.95rem;
+        }
+
+        .training-item strong {
+            display: block;
+            font-size: 1.05rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* ---- CONTACT ---- */
+        .contact-box {
+            border: var(--border);
+            background: var(--black);
+            color: var(--white);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+        }
+
+        .contact-box h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--yellow);
+        }
+
+        .contact-box p {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .contact-link {
+            display: inline-block;
+            background: var(--yellow);
+            color: var(--black);
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--yellow);
+            text-decoration: none;
+            box-shadow: 4px 4px 0px var(--yellow);
+            transition: all 0.1s;
+        }
+
+        .contact-link:hover {
+            background: var(--white);
+            box-shadow: 6px 6px 0px var(--yellow);
+            transform: translate(-2px, -2px);
+        }
+
+        /* ---- FOOTER ---- */
+        footer {
+            border-top: var(--border);
+            padding: 2rem;
+            text-align: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        footer span {
+            color: var(--yellow);
+        }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 2.5rem 1.25rem;
+                gap: 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.2rem;
+                letter-spacing: -1px;
+            }
+
+            .badge-box {
+                transform: rotate(0deg);
+            }
+
+            .badge-box .number {
+                font-size: 3.5rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            section {
+                padding: 2.5rem 1.25rem;
+            }
+
+            .section-header {
+                font-size: 1.4rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .training-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-box {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">AJ_</div>
+        <ul>
+            <li><a href="#about">O mnie</a></li>
+            <li><a href="#expertise">Ekspertyza</a></li>
+            <li><a href="#projects">Projekty</a></li>
+            <li><a href="#training">Szkolenia</a></li>
+            <li><a href="#contact">Kontakt</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-text">
+            <h1>Andrzej Jankowski<br><span class="highlight">Ekspert AI</span></h1>
+            <p>Od strategii do wdrożenia — pomagam organizacjom zrozumieć, zaprojektować i wdrożyć sztuczną inteligencję w biznesie, administracji publicznej i edukacji.</p>
+        </div>
+        <div class="hero-badge">
+            <div class="badge-box">
+                <span class="number">20+</span>
+                <span class="label">lat doświadczenia w środowiskach enterprise</span>
+            </div>
+        </div>
+    </div>
+
+    <section id="about">
+        <div class="section-header">O mnie</div>
+        <div class="about-grid">
+            <div class="card">
+                <span class="card-tag">Enterprise</span>
+                <h3>Intel Technology Poland</h3>
+                <p>Przez ponad dwie dekady związany z Intel, gdzie odpowiadał za współpracę z europejskimi firmami rozwijającymi systemy AI oraz wspierał wdrożenia tej technologii w sektorze biznesowym i edukacyjnym.</p>
+            </div>
+            <div class="card">
+                <span class="card-tag">Doradztwo</span>
+                <h3>Niezależna praktyka</h3>
+                <p>Dziś prowadzi niezależną praktykę doradczą — pomaga firmom budować strategie AI i wdrażać konkretne rozwiązania dopasowane do realiów ich organizacji.</p>
+            </div>
+            <div class="card">
+                <span class="card-tag">Akademia</span>
+                <h3>Akademia Leona Koźmińskiego</h3>
+                <p>Współtwórca i prowadzący zajęcia na studiach podyplomowych Biznes.AI oraz Prawo Sztucznej Inteligencji. Specjalizuje się w praktycznym projektowaniu i zastosowaniu systemów AI.</p>
+            </div>
+            <div class="card">
+                <span class="card-tag">Publikacje</span>
+                <h3>Ministerstwo Cyfryzacji</h3>
+                <p>Współautor raportu „Uczenie ustawiczne w zakresie sztucznej inteligencji", przygotowanego na zlecenie Ministerstwa Cyfryzacji.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="expertise">
+        <div class="section-header">Ekspertyza</div>
+        <div class="expertise-list">
+            <div class="expertise-item">Strategia AI</div>
+            <div class="expertise-item">Generatywna AI</div>
+            <div class="expertise-item">EU AI Act</div>
+            <div class="expertise-item">RODO & AI</div>
+            <div class="expertise-item">Wdrożenia AI w biznesie</div>
+            <div class="expertise-item">AI w edukacji</div>
+            <div class="expertise-item">AI w administracji</div>
+            <div class="expertise-item">Projektowanie systemów AI</div>
+            <div class="expertise-item">Szkolenia & warsztaty</div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="section-header">Małe projekty</div>
+        <div class="projects-grid">
+            <a href="https://beehonest.edu.pl" class="project-card" target="_blank" rel="noopener">
+                <span class="project-icon">&#x1F41D;</span>
+                <h3>BeeHonest</h3>
+                <p>Platforma edukacyjna wspierająca uczciwość akademicką i etyczne podejście do AI w edukacji.</p>
+                <span class="project-url">beehonest.edu.pl &rarr;</span>
+            </a>
+            <a href="https://workszop.org" class="project-card" target="_blank" rel="noopener">
+                <span class="project-icon">&#x1F6E0;</span>
+                <h3>Workszop</h3>
+                <p>Platforma warsztatowa — narzędzia i materiały do prowadzenia praktycznych szkoleń z zakresu AI.</p>
+                <span class="project-url">workszop.org &rarr;</span>
+            </a>
+            <a href="https://mobi.workszop.org" class="project-card" target="_blank" rel="noopener">
+                <span class="project-icon">&#x1F4F1;</span>
+                <h3>Workszop Mobile</h3>
+                <p>Mobilna wersja platformy Workszop — warsztaty AI dostępne z każdego urządzenia.</p>
+                <span class="project-url">mobi.workszop.org &rarr;</span>
+            </a>
+        </div>
+    </section>
+
+    <section id="training">
+        <div class="section-header">Szkolenia & warsztaty</div>
+        <div class="training-list">
+            <div class="training-item">
+                <div class="marker">01</div>
+                <div>
+                    <strong>Ministerstwo Edukacji</strong>
+                    <p>Warsztaty z zastosowań AI w systemie edukacji</p>
+                </div>
+            </div>
+            <div class="training-item">
+                <div class="marker">02</div>
+                <div>
+                    <strong>Ministerstwo Rozwoju i Technologii</strong>
+                    <p>Szkolenia z praktycznego wdrażania AI w administracji publicznej</p>
+                </div>
+            </div>
+            <div class="training-item">
+                <div class="marker">03</div>
+                <div>
+                    <strong>Smart Africa</strong>
+                    <p>Międzynarodowe warsztaty AI dla sektora publicznego</p>
+                </div>
+            </div>
+            <div class="training-item">
+                <div class="marker">04</div>
+                <div>
+                    <strong>Środowiska prawnicze</strong>
+                    <p>Szkolenia z regulacji AI — EU AI Act, RODO i prawo sztucznej inteligencji</p>
+                </div>
+            </div>
+            <div class="training-item">
+                <div class="marker">05</div>
+                <div>
+                    <strong>Sektor prywatny</strong>
+                    <p>Generatywna AI i praktyczne zastosowania w biznesie</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="section-header">Kontakt</div>
+        <div class="contact-box">
+            <h3>Porozmawiajmy_</h3>
+            <p>Szukasz eksperta AI do konsultacji, szkolenia lub współpracy przy wdrożeniu? Napisz do mnie.</p>
+            <a href="mailto:andrzej@edulab.dev" class="contact-link">andrzej@edulab.dev</a>
+        </div>
+    </section>
+
+    <footer>
+        <span>&copy; 2026</span> Andrzej Jankowski — Ekspert AI
+    </footer>
+
+</body>
+</html>
