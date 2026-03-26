@@ -280,6 +280,49 @@
         }
 
         /* ---- TRAINING ---- */
+        .experience-highlight {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            max-width: 720px;
+            margin: 0 auto 2.5rem;
+            border: var(--border);
+            background: var(--black);
+            color: var(--white);
+            padding: 1.5rem 2rem;
+            box-shadow: 6px 6px 0px var(--yellow);
+        }
+
+        .experience-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+            padding-right: 2rem;
+            border-right: 2px solid rgba(255,255,255,0.25);
+        }
+
+        .stat-number {
+            font-family: 'Space Mono', monospace;
+            font-weight: 900;
+            font-size: 2.5rem;
+            line-height: 1;
+            color: var(--yellow);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.7;
+            margin-top: 0.25rem;
+        }
+
+        .experience-text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
         .training-list {
             display: flex;
             flex-direction: column;
@@ -432,6 +475,19 @@
                 grid-template-columns: 1fr;
             }
 
+            .experience-highlight {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .experience-stat {
+                padding-right: 0;
+                border-right: none;
+                padding-bottom: 1rem;
+                border-bottom: 2px solid rgba(255,255,255,0.25);
+            }
+
             .training-item {
                 flex-direction: column;
                 text-align: center;
@@ -510,7 +566,15 @@
 
     <section id="references">
         <div class="section-header">Doświadczenie szkoleniowe</div>
-        <p style="max-width: 720px; margin: 0 auto 2rem; font-size: 1.1rem; line-height: 1.7;">Projektuję i prowadzę szkolenia z AI od 2018 roku. Pracowałem z wyższymi urzędnikami ministerstw, kadrą menedżerską, prawnikami, nauczycielami i studentami studiów podyplomowych.</p>
+        <div class="experience-highlight">
+            <div class="experience-stat">
+                <span class="stat-number">2018</span>
+                <span class="stat-label">Szkolenia z AI od</span>
+            </div>
+            <div class="experience-text">
+                Projektuję i prowadzę szkolenia z&nbsp;AI. Pracowałem z&nbsp;wyższymi urzędnikami ministerstw, kadrą menedżerską, prawnikami, nauczycielami i&nbsp;studentami studiów podyplomowych.
+            </div>
+        </div>
         <div class="training-list">
             <div class="training-item">
                 <div class="marker">01</div>
