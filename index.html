@@ -25,9 +25,9 @@
 <body class="bg-[#050505] text-neutral-100 font-sans selection:bg-white selection:text-black overflow-x-hidden" style="font-family: 'Inter', sans-serif;">
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full p-6 flex justify-between items-center z-50 mix-blend-difference">
+    <nav class="fixed top-0 left-0 w-full p-4 md:p-6 flex flex-col md:flex-row justify-between items-center z-50 mix-blend-difference gap-2 md:gap-0">
         <div class="text-xl font-bold tracking-widest uppercase">edulab.</div>
-        <div class="flex gap-4 text-sm font-medium tracking-tight">
+        <div class="flex flex-wrap justify-center gap-2 md:gap-4 text-xs md:text-sm font-medium tracking-tight">
             <a href="#about" class="hover:line-through transition-all">O MNIE</a>
             <a href="#expertise" class="hover:line-through transition-all">KOMPETENCJE</a>
             <a href="#references" class="hover:line-through transition-all">DOŚWIADCZENIE</a>
@@ -37,22 +37,22 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative h-screen flex flex-col justify-center items-center overflow-hidden">
+    <header class="relative h-screen flex flex-col justify-center items-center overflow-hidden px-6">
         <div
             id="bg-ai"
             class="absolute left-0 font-black tracking-tighter leading-none select-none pointer-events-none opacity-10"
-            style="font-size: clamp(15rem, 45vw, 60rem);"
+            style="font-size: clamp(10rem, 45vw, 60rem);"
         >
             AI
         </div>
 
-        <div class="z-10 flex flex-col items-center mix-blend-difference">
-            <h1 class="text-[12vw] font-black leading-none tracking-tighter uppercase text-center">
+        <div class="z-10 flex flex-col items-center mix-blend-difference w-full max-w-7xl">
+            <h1 class="text-[14vw] md:text-[12vw] font-black leading-none tracking-tighter uppercase text-center">
                 <span class="text-orange-500">AI</span> W PRAKTYCE
             </h1>
-            <div class="flex items-center gap-4 mt-8">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 md:w-12 md:h-12"><path d="m7 7 10 10"/><path d="M17 7v10H7"/></svg>
-                <p class="text-lg md:text-2xl font-medium tracking-tight max-w-lg uppercase">
+            <div class="flex items-center gap-4 mt-8 px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 md:w-12 md:h-12 flex-shrink-0"><path d="m7 7 10 10"/><path d="M17 7v10H7"/></svg>
+                <p class="text-base md:text-2xl font-medium tracking-tight max-w-lg uppercase">
                     Od strategii do wdrożenia. Sztuczna inteligencja w biznesie, administracji i edukacji.
                 </p>
             </div>
@@ -60,7 +60,7 @@
     </header>
 
     <!-- Section: O mnie -->
-    <section id="about" class="relative min-h-screen py-32 px-6 md:px-20 flex items-center">
+    <section id="about" class="relative min-h-screen py-20 md:py-32 px-6 md:px-20 flex items-center">
         <div
             id="bg-question"
             class="absolute right-[-5%] top-1/4 font-black tracking-tighter leading-none select-none pointer-events-none text-white opacity-[0.07]"
@@ -69,7 +69,7 @@
             ?
         </div>
 
-        <div class="max-w-5xl relative z-10">
+        <div class="max-w-7xl w-full mx-auto relative z-10">
             <h2 class="text-[15vw] md:text-[8vw] font-black leading-none tracking-tighter mb-12">
                 KIM
                 <br />
@@ -95,7 +95,7 @@
     </section>
 
     <!-- Section: Kompetencje -->
-    <section id="expertise" class="relative min-h-screen py-32 px-6 md:px-20 bg-white text-black overflow-hidden">
+    <section id="expertise" class="relative min-h-screen py-20 md:py-32 px-6 md:px-20 bg-white text-black overflow-hidden">
         <div
             id="bg-a"
             class="absolute left-[-10%] top-0 font-black tracking-tighter leading-none select-none pointer-events-none text-[#f0f0f0]"
@@ -106,7 +106,7 @@
 
         <div class="relative z-10 w-full max-w-7xl mx-auto flex flex-col justify-end h-full">
             <div class="flex justify-between items-end border-b-8 border-black pb-8 mb-16">
-                <h2 class="text-[10vw] font-black leading-none tracking-tighter">KOMPETENCJE<span class="text-orange-500">.</span></h2>
+                <h2 class="text-[10vw] md:text-[8vw] font-black leading-none tracking-tighter">KOMPETENCJE<span class="text-orange-500">.</span></h2>
                 <div class="hidden md:flex gap-4 pb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/></svg>
@@ -114,7 +114,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="group border-2 border-black p-8 hover:bg-black hover:text-white transition-colors duration-300 flex flex-col justify-between min-h-[250px]">
                     <h3 class="text-5xl font-black tracking-tighter mb-4">01.</h3>
                     <div>
@@ -146,16 +146,16 @@
             </div>
 
             <div class="flex flex-wrap gap-4 mt-12">
-                <span class="border-2 border-black px-6 py-3 text-lg font-bold uppercase tracking-tight hover:bg-black hover:text-white transition-colors cursor-default">AI dla sektora prawnego</span>
-                <span class="border-2 border-black px-6 py-3 text-lg font-bold uppercase tracking-tight hover:bg-black hover:text-white transition-colors cursor-default">AI w edukacji</span>
-                <span class="border-2 border-black px-6 py-3 text-lg font-bold uppercase tracking-tight hover:bg-black hover:text-white transition-colors cursor-default">AI w administracji</span>
-                <span class="border-2 border-black px-6 py-3 text-lg font-bold uppercase tracking-tight hover:bg-black hover:text-white transition-colors cursor-default">Projektowanie systemów AI</span>
+                <span class="border-2 border-black px-4 md:px-6 py-2 md:py-3 text-sm md:text-lg font-bold uppercase tracking-tight hover:bg-black hover:text-white transition-colors cursor-default">AI dla sektora prawnego</span>
+                <span class="border-2 border-black px-4 md:px-6 py-2 md:py-3 text-sm md:text-lg font-bold uppercase tracking-tight hover:bg-black hover:text-white transition-colors cursor-default">AI w edukacji</span>
+                <span class="border-2 border-black px-4 md:px-6 py-2 md:py-3 text-sm md:text-lg font-bold uppercase tracking-tight hover:bg-black hover:text-white transition-colors cursor-default">AI w administracji</span>
+                <span class="border-2 border-black px-4 md:px-6 py-2 md:py-3 text-sm md:text-lg font-bold uppercase tracking-tight hover:bg-black hover:text-white transition-colors cursor-default">Projektowanie systemów AI</span>
             </div>
         </div>
     </section>
 
     <!-- Section: Doświadczenie -->
-    <section id="references" class="relative min-h-screen py-32 px-6 md:px-20 flex items-center">
+    <section id="references" class="relative min-h-screen py-20 md:py-32 px-6 md:px-20 flex items-center">
         <div
             class="absolute left-[-5%] top-1/4 font-black tracking-tighter leading-none select-none pointer-events-none text-white opacity-[0.07]"
             style="font-size: clamp(15rem, 50vw, 70rem);"
@@ -164,8 +164,8 @@
             2018
         </div>
 
-        <div class="max-w-5xl relative z-10 w-full">
-            <h2 class="text-[15vw] md:text-[8vw] font-black leading-none tracking-tighter mb-6">
+        <div class="max-w-7xl w-full mx-auto relative z-10">
+            <h2 class="text-[12vw] md:text-[8vw] font-black leading-none tracking-tighter mb-6">
                 DOŚWIAD&shy;CZENIE<span class="text-orange-500">.</span>
             </h2>
             <p class="text-xl md:text-3xl font-medium tracking-tight text-neutral-400 max-w-3xl mb-16">
@@ -175,7 +175,7 @@
             <div class="space-y-6">
                 <!-- Item 01 -->
                 <div class="group flex items-start gap-8 border-b border-neutral-800 pb-6 hover:border-neutral-500 transition-colors">
-                    <span class="text-5xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors">01</span>
+                    <span class="text-4xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors flex-shrink-0">01</span>
                     <div class="pt-2 md:pt-4">
                         <h3 class="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-2">Studia podyplomowe</h3>
                         <p class="text-lg text-neutral-400 font-medium leading-snug">Akademia Leona Koźmińskiego - współtwórca i wykładowca trzech programów: Biznes.AI, Prawo Sztucznej Inteligencji oraz Szkoła IT dla Prawników.</p>
@@ -183,7 +183,7 @@
                 </div>
                 <!-- Item 02 -->
                 <div class="group flex items-start gap-8 border-b border-neutral-800 pb-6 hover:border-neutral-500 transition-colors">
-                    <span class="text-5xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors">02</span>
+                    <span class="text-4xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors flex-shrink-0">02</span>
                     <div class="pt-2 md:pt-4">
                         <h3 class="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-2">Administracja publiczna</h3>
                         <p class="text-lg text-neutral-400 font-medium leading-snug">Wielodniowe warsztaty AI dla kadry kierowniczej Ministerstwa Edukacji Narodowej, Ministerstwa Rozwoju i Technologii oraz organizacji Smart Africa.</p>
@@ -191,7 +191,7 @@
                 </div>
                 <!-- Item 03 -->
                 <div class="group flex items-start gap-8 border-b border-neutral-800 pb-6 hover:border-neutral-500 transition-colors">
-                    <span class="text-5xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors">03</span>
+                    <span class="text-4xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors flex-shrink-0">03</span>
                     <div class="pt-2 md:pt-4">
                         <h3 class="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-2">Firmy i korporacje</h3>
                         <p class="text-lg text-neutral-400 font-medium leading-snug">Dedykowane programy szkoleniowe we współpracy z Asseco Data Systems, Think Tank, Koalicją na Rzecz Polskich Innowacji - dla branży produkcyjnej, doradczej, IT i logistycznej.</p>
@@ -199,7 +199,7 @@
                 </div>
                 <!-- Item 04 -->
                 <div class="group flex items-start gap-8 border-b border-neutral-800 pb-6 hover:border-neutral-500 transition-colors">
-                    <span class="text-5xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors">04</span>
+                    <span class="text-4xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors flex-shrink-0">04</span>
                     <div class="pt-2 md:pt-4">
                         <h3 class="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-2">Środowisko prawnicze</h3>
                         <p class="text-lg text-neutral-400 font-medium leading-snug">Warsztaty dla Okręgowej Izby Radców Prawnych w Łodzi oraz cykle edukacyjne dla prawników w ramach programów akademickich.</p>
@@ -207,7 +207,7 @@
                 </div>
                 <!-- Item 05 -->
                 <div class="group flex items-start gap-8 border-b border-neutral-800 pb-6 hover:border-neutral-500 transition-colors">
-                    <span class="text-5xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors">05</span>
+                    <span class="text-4xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors flex-shrink-0">05</span>
                     <div class="pt-2 md:pt-4">
                         <h3 class="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-2">Edukacja i nauczyciele</h3>
                         <p class="text-lg text-neutral-400 font-medium leading-snug">Szkolenia dla nauczycieli z wykorzystania AI w szkole - we współpracy z OEIiZK oraz Ministerstwem Edukacji Narodowej.</p>
@@ -218,7 +218,7 @@
     </section>
 
     <!-- Section: Szkolenia -->
-    <section id="training" class="relative min-h-screen flex items-center justify-center py-32 overflow-hidden">
+    <section id="training" class="relative min-h-screen flex items-center py-20 md:py-32 overflow-hidden">
         <div class="absolute inset-0 flex flex-col justify-center items-center opacity-5 pointer-events-none select-none">
             <div class="text-[20vw] font-black leading-[0.8] tracking-tighter whitespace-nowrap">SZKOLENIA AI</div>
             <div class="text-[20vw] font-black leading-[0.8] tracking-tighter whitespace-nowrap">SZKOLENIA AI</div>
@@ -227,10 +227,10 @@
             <div class="text-[20vw] font-black leading-[0.8] tracking-tighter whitespace-nowrap">SZKOLENIA AI</div>
         </div>
 
-        <div class="relative z-10 px-6 md:px-20 max-w-7xl w-full">
-            <div class="text-[20vw] md:text-[12vw] font-black tracking-tighter leading-none mb-12 text-white">
+        <div class="relative z-10 px-6 md:px-20 max-w-7xl w-full mx-auto">
+            <h2 class="text-[14vw] md:text-[8vw] font-black tracking-tighter leading-none mb-12 text-white">
                 SZKOLENIA<span class="text-orange-500">.</span>
-            </div>
+            </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
                 <div class="border border-neutral-800 p-8 hover:border-neutral-500 transition-colors">
@@ -262,7 +262,7 @@
     </section>
 
     <!-- Section: Projekty -->
-    <section class="relative py-32 px-6 md:px-20 bg-white text-black overflow-hidden">
+    <section class="relative py-20 md:py-32 px-6 md:px-20 bg-white text-black overflow-hidden">
         <div class="absolute right-[-5%] bottom-[-10%] font-black tracking-tighter leading-none select-none pointer-events-none text-[#f0f0f0]"
             style="font-size: clamp(15rem, 50vw, 70rem);">
             P
@@ -270,10 +270,10 @@
 
         <div class="relative z-10 w-full max-w-7xl mx-auto">
             <div class="flex justify-between items-end border-b-8 border-black pb-8 mb-16">
-                <h2 class="leading-none tracking-tighter"><span class="text-[10vw] font-black block">MICRO</span><span class="text-[3vw] font-medium block mt-2uppercase">PROJEKTY<span class="text-orange-500">.</span></span></h2>
+                <h2 class="leading-none tracking-tighter"><span class="text-[10vw] md:text-[8vw] font-black block">MICRO</span><span class="text-[3vw] md:text-[2vw] font-medium block mt-2 uppercase">PROJEKTY</span></h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                 <a href="https://workszop.org" target="_blank" rel="noopener" class="group border-2 border-black p-8 hover:bg-black hover:text-white transition-colors duration-300 flex flex-col justify-between min-h-[300px] no-underline text-black">
                     <span class="text-5xl mb-4">&#x1F9F1;</span>
                     <div>
@@ -303,21 +303,21 @@
     </section>
 
     <!-- Section: Kontakt -->
-    <section id="contact" class="relative min-h-[70vh] flex items-center justify-center py-32 overflow-hidden">
+    <section id="contact" class="relative min-h-[70vh] flex items-center py-20 md:py-32 overflow-hidden">
         <div class="absolute inset-0 flex flex-col justify-center items-center opacity-5 pointer-events-none select-none">
             <div class="text-[25vw] font-black leading-[0.8] tracking-tighter whitespace-nowrap">KONTAKT</div>
             <div class="text-[25vw] font-black leading-[0.8] tracking-tighter whitespace-nowrap">KONTAKT</div>
             <div class="text-[25vw] font-black leading-[0.8] tracking-tighter whitespace-nowrap">KONTAKT</div>
         </div>
 
-        <div class="relative z-10 text-center px-4 w-full mx-auto">
-            <div class="text-[12vw] md:text-[8vw] font-black tracking-tighter leading-none mb-8 text-white">
-                POROZMAWIAJMY
-            </div>
-            <p class="text-2xl md:text-4xl font-medium tracking-tight leading-tight">
+        <div class="relative z-10 px-6 md:px-20 w-full max-w-7xl mx-auto">
+            <h2 class="text-[12vw] md:text-[8vw] font-black tracking-tighter leading-none mb-8 text-white">
+                POROZMAWIAJMY<span class="text-orange-500">.</span>
+            </h2>
+            <p class="text-xl md:text-4xl font-medium tracking-tight leading-tight max-w-3xl">
                 Szukasz eksperta AI do konsultacji, szkolenia lub współpracy przy wdrożeniu?
             </p>
-            <a href="mailto:andrzej@edulab.dev" class="mt-12 group inline-flex items-center gap-4 text-xl md:text-3xl font-bold uppercase tracking-widest border-b-4 border-white pb-2 hover:text-orange-500 hover:border-orange-500 transition-colors no-underline text-white">
+            <a href="mailto:andrzej@edulab.dev" class="mt-12 group inline-flex items-center gap-4 text-lg md:text-3xl font-bold uppercase tracking-widest border-b-4 border-white pb-2 hover:text-orange-500 hover:border-orange-500 transition-colors no-underline text-white break-all md:break-normal">
                 andrzej@edulab.dev
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 group-hover:translate-x-4 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>
@@ -325,7 +325,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white text-black py-20 px-6 md:px-20 flex flex-col md:flex-row justify-between items-end relative overflow-hidden">
+    <footer class="bg-white text-black py-12 md:py-20 px-6 md:px-20 flex flex-col md:flex-row justify-between items-start md:items-end relative overflow-hidden gap-6">
         <div class="text-[40vw] font-black leading-none absolute -bottom-20 -right-10 opacity-10 pointer-events-none">
             .
         </div>
