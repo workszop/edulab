@@ -1,680 +1,564 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI w praktyce - od strategii do wdrożenia</title>
+    <title>AI w praktyce - od strategii do wdrożenia | Edulab</title>
+    <meta name="description" content="Ekspert AI – szkolenia, doradztwo i wdrożenia sztucznej inteligencji dla firm, administracji i edukacji. Od strategii do wdrożenia.">
+    <meta property="og:title" content="AI w praktyce – od strategii do wdrożenia | Edulab">
+    <meta property="og:description" content="Ekspert AI – szkolenia, doradztwo i wdrożenia sztucznej inteligencji dla firm, administracji i edukacji.">
+    <meta property="og:image" content="me.png">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;600;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        body { animation: bodyFadeIn 0.5s ease-in; }
+        @keyframes bodyFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        :root {
-            --black: #1a1a1a;
-            --white: #f5f0e8;
-            --yellow: #FFD600;
-            --blue: #3344FF;
-            --red: #FF3344;
-            --green: #00CC66;
-            --border: 3px solid var(--black);
-            --shadow: 6px 6px 0px var(--black);
-            --shadow-hover: 8px 8px 0px var(--black);
+        #navbar {
+            transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+        #navbar.scrolled {
+            background: rgba(5, 5, 5, 0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom-color: rgba(255, 255, 255, 0.07);
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--white);
-            color: var(--black);
-            line-height: 1.6;
-        }
-
-        /* ---- NAV ---- */
-        nav {
-            border-bottom: var(--border);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--yellow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        nav .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo-img {
-            height: 77px;
-            width: auto;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 0.25rem;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--black);
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            padding: 0.5rem 1rem;
-            border: 2px solid transparent;
-            transition: all 0.1s;
-        }
-
-        nav a:hover {
-            border: 2px solid var(--black);
-            background: var(--white);
-        }
-
-        /* ---- HERO ---- */
-        .hero {
-            border-bottom: var(--border);
-            padding: 4rem 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .hero-text h1 {
-            font-family: 'Space Mono', monospace;
-            font-size: 3.5rem;
-            line-height: 1.05;
-            letter-spacing: -2px;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-text h1 .highlight {
-            background: var(--yellow);
-            padding: 0 0.3rem;
-            border: var(--border);
-            display: inline;
-        }
-
-        .hero-text p {
-            font-size: 1.15rem;
-            max-width: 520px;
-            margin-bottom: 2rem;
-        }
-
-        .hero-badge {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .badge-box {
-            width: 320px;
-            height: 320px;
-            border: var(--border);
-            box-shadow: var(--shadow);
-            transform: rotate(2deg);
-            overflow: hidden;
-        }
-
-        .badge-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .ham-line {
             display: block;
+            width: 22px;
+            height: 2px;
+            background: currentColor;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform-origin: center;
+        }
+        #nav-toggle.open .ham-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        #nav-toggle.open .ham-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        #nav-toggle.open .ham-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        #mobile-nav {
+            transform: translateY(-110%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #mobile-nav.open {
+            transform: translateY(0%);
         }
 
-        /* ---- SECTIONS ---- */
-        section {
-            border-bottom: var(--border);
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            font-family: 'Space Mono', monospace;
-            font-size: 2rem;
-            text-transform: uppercase;
-            margin-bottom: 2rem;
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border: var(--border);
-            background: var(--yellow);
-        }
-
-        /* ---- ABOUT CARDS ---- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .card {
-            border: var(--border);
-            padding: 2rem;
-            background: #fff;
-            box-shadow: var(--shadow);
-            transition: transform 0.15s, box-shadow 0.15s;
-        }
-
-        .card:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .card-tag {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            background: var(--black);
-            color: var(--yellow);
-            padding: 0.2rem 0.6rem;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
-        .card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .card p {
-            font-size: 0.95rem;
-            color: #444;
-        }
-
-        /* ---- EXPERTISE ---- */
-        .expertise-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .expertise-item {
-            border: var(--border);
-            padding: 1rem 1.5rem;
-            font-family: 'Space Mono', monospace;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            background: #fff;
-            box-shadow: 4px 4px 0px var(--black);
-            transition: all 0.1s;
-            cursor: default;
-        }
-
-        .expertise-item:nth-child(odd) {
-            background: var(--yellow);
-        }
-
-        .expertise-item:nth-child(3n) {
-            transform: rotate(-1deg);
-        }
-
-        .expertise-item:nth-child(3n+1) {
-            transform: rotate(0.5deg);
-        }
-
-        .expertise-item:hover {
-            transform: rotate(0deg) translate(-2px, -2px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        /* ---- PROJECTS ---- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .project-card {
-            border: var(--border);
-            padding: 2rem;
-            background: #fff;
-            box-shadow: var(--shadow);
-            transition: transform 0.15s, box-shadow 0.15s;
-            text-decoration: none;
-            color: var(--black);
-            display: block;
-        }
-
-        .project-card:hover {
-            transform: translate(-3px, -3px);
-            box-shadow: var(--shadow-hover);
-            background: var(--yellow);
-        }
-
-        .project-card .project-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .project-card h3 {
-            font-family: 'Space Mono', monospace;
-            font-size: 1.15rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-card .project-url {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--blue);
-            text-decoration: underline;
-            display: block;
-            margin-top: 0.75rem;
-        }
-
-        .project-card p {
-            font-size: 0.9rem;
-            color: #444;
-        }
-
-        /* ---- TRAINING ---- */
-        .experience-highlight {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            max-width: 720px;
-            margin: 0 auto 2.5rem;
-            border: var(--border);
-            background: var(--black);
-            color: var(--white);
-            padding: 1.5rem 2rem;
-            box-shadow: 6px 6px 0px var(--yellow);
-        }
-
-        .experience-stat {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-shrink: 0;
-            padding-right: 2rem;
-            border-right: 2px solid rgba(255,255,255,0.25);
-        }
-
-        .stat-number {
-            font-family: 'Space Mono', monospace;
-            font-weight: 900;
-            font-size: 2.5rem;
-            line-height: 1;
-            color: var(--yellow);
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            opacity: 0.7;
-            margin-top: 0.25rem;
-        }
-
-        .experience-text {
-            font-size: 1.05rem;
-            line-height: 1.7;
-        }
-
-        .training-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .training-item {
-            border: var(--border);
-            padding: 1.5rem 2rem;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            box-shadow: 4px 4px 0px var(--black);
-        }
-
-        .training-item .marker {
-            font-family: 'Space Mono', monospace;
-            font-weight: 900;
-            font-size: 1.5rem;
-            background: var(--blue);
+        #navbar a.nav-active,
+        #mobile-nav a.nav-active {
             color: #fff;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            border: 2px solid var(--black);
+            position: relative;
         }
-
-        .training-item:nth-child(even) .marker {
-            background: var(--red);
+        #navbar a.nav-active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -6px;
+            height: 2px;
+            background: #f97316;
         }
-
-        .training-item:nth-child(3n) .marker {
-            background: var(--green);
-        }
-
-        .training-item p {
-            font-size: 0.95rem;
-        }
-
-        .training-item strong {
-            display: block;
-            font-size: 1.05rem;
-            margin-bottom: 0.25rem;
-        }
-
-        /* ---- CONTACT ---- */
-        .contact-box {
-            border: var(--border);
-            background: var(--black);
-            color: var(--white);
-            padding: 3rem;
-            box-shadow: var(--shadow);
-            max-width: 600px;
-        }
-
-        .contact-box h3 {
-            font-family: 'Space Mono', monospace;
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--yellow);
-        }
-
-        .contact-box p {
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-        }
-
-        .contact-link {
-            display: inline-block;
-            background: var(--yellow);
-            color: var(--black);
-            font-family: 'Space Mono', monospace;
-            font-weight: 700;
-            font-size: 1rem;
-            text-transform: uppercase;
-            padding: 0.8rem 1.5rem;
-            border: 2px solid var(--yellow);
-            text-decoration: none;
-            box-shadow: 4px 4px 0px var(--yellow);
-            transition: all 0.1s;
-        }
-
-        .contact-link:hover {
-            background: var(--white);
-            box-shadow: 6px 6px 0px var(--yellow);
-            transform: translate(-2px, -2px);
-        }
-
-        /* ---- FOOTER ---- */
-        footer {
-            border-top: var(--border);
-            padding: 2rem;
-            text-align: center;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            background: var(--black);
-            color: var(--white);
-        }
-
-        footer span {
-            color: var(--yellow);
-        }
-
-        /* ---- RESPONSIVE ---- */
-        @media (max-width: 768px) {
-            .hero {
-                grid-template-columns: 1fr;
-                padding: 2.5rem 1.25rem;
-                gap: 2rem;
-            }
-
-            .hero-text h1 {
-                font-size: 2.2rem;
-                letter-spacing: -1px;
-            }
-
-            .badge-box {
-                transform: rotate(0deg);
-                width: 260px;
-                height: 260px;
-            }
-
-            nav {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            section {
-                padding: 2.5rem 1.25rem;
-            }
-
-            .section-header {
-                font-size: 1.4rem;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .experience-highlight {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
-            }
-
-            .experience-stat {
-                padding-right: 0;
-                border-right: none;
-                padding-bottom: 1rem;
-                border-bottom: 2px solid rgba(255,255,255,0.25);
-            }
-
-            .training-item {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .contact-box {
-                padding: 2rem 1.5rem;
-            }
+        #mobile-nav a.nav-active {
+            color: #f97316;
         }
     </style>
 </head>
-<body>
+<body class="bg-[#050505] text-neutral-100 font-sans selection:bg-white selection:text-black overflow-x-hidden" style="font-family: 'Inter', sans-serif;">
 
-    <nav>
-        <div class="logo"><img src="logo.png" alt="edulab.dev" class="logo-img"></div>
-        <ul>
-            <li><a href="#about">O mnie</a></li>
-            <li><a href="#expertise">Kompetencje</a></li>
-            <li><a href="#references">Doświadczenie</a></li>
-            <li><a href="#training">Szkolenia</a></li>
-            <li><a href="#contact">Kontakt</a></li>
-        </ul>
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full px-6 md:px-10 py-4 flex justify-between items-center z-50">
+        <a href="#" class="text-xl font-bold tracking-widest uppercase text-white no-underline">edulab<span class="text-orange-500">.</span></a>
+
+        <div class="hidden md:flex gap-6 text-sm font-medium tracking-tight">
+            <a href="#about" class="text-neutral-400 hover:text-white transition-colors">O MNIE</a>
+            <a href="#expertise" class="text-neutral-400 hover:text-white transition-colors">KOMPETENCJE</a>
+            <a href="#references" class="text-neutral-400 hover:text-white transition-colors">DOŚWIADCZENIE</a>
+            <a href="#training" class="text-neutral-400 hover:text-white transition-colors">SZKOLENIA</a>
+            <a href="#contact" class="text-orange-500 hover:text-orange-400 transition-colors font-semibold">KONTAKT</a>
+        </div>
+
+        <button id="nav-toggle" class="md:hidden flex flex-col gap-[6px] p-2 text-white" aria-label="Menu">
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+        </button>
     </nav>
 
-    <div class="hero">
-        <div class="hero-text">
-            <h1><span class="highlight">AI w praktyce</span></h1>
-            <p>Od strategii do wdrożenia - pomagam organizacjom zrozumieć, zaprojektować i wdrożyć sztuczną inteligencję w biznesie, administracji publicznej i edukacji.</p>
-        </div>
-        <div class="hero-badge">
-            <div class="badge-box">
-                <img src="me3.png" alt="Foto" />
-            </div>
-        </div>
+    <!-- Mobile menu -->
+    <div id="mobile-nav" class="fixed top-[60px] left-0 w-full bg-[#050505]/96 backdrop-blur-xl z-40 flex flex-col items-center gap-7 py-10 text-sm font-bold tracking-widest uppercase border-b border-neutral-800 md:hidden">
+        <a href="#about" class="mobile-link hover:text-orange-500 transition-colors">O MNIE</a>
+        <a href="#expertise" class="mobile-link hover:text-orange-500 transition-colors">KOMPETENCJE</a>
+        <a href="#references" class="mobile-link hover:text-orange-500 transition-colors">DOŚWIADCZENIE</a>
+        <a href="#training" class="mobile-link hover:text-orange-500 transition-colors">SZKOLENIA</a>
+        <a href="#contact" class="mobile-link text-orange-500 hover:text-orange-400 transition-colors">KONTAKT</a>
     </div>
 
-    <section id="about">
-        <div class="section-header">O mnie</div>
-        <div class="about-grid">
-            <div class="card">
-                <span class="card-tag">Enterprise</span>
-                <h3>Intel Technology Poland</h3>
-                <p>Przez wiele lat związany z firmą Intel, jednym z największych światowych dostawców procesorów do komputerów oraz centrów danych, gdzie odpowiadał za współpracę z europejskimi firmami rozwijającymi systemy AI oraz wspierał wdrożenia tej technologii w sektorze biznesowym i edukacyjnym.</p>
-            </div>
-            <div class="card">
-                <span class="card-tag">Doradztwo</span>
-                <h3>Niezależna praktyka</h3>
-                <p>Dziś prowadzi niezależną praktykę doradczą - pomaga firmom budować strategie AI i wdrażać konkretne rozwiązania dopasowane do realiów ich organizacji.</p>
-            </div>
-            <div class="card">
-                <span class="card-tag">Akademia</span>
-                <h3>Akademia Leona Koźmińskiego</h3>
-                <p>Współtwórca i prowadzący zajęcia na studiach podyplomowych Biznes.AI oraz Prawo Sztucznej Inteligencji. Specjalizuje się w praktycznym projektowaniu i zastosowaniu systemów AI.</p>
-            </div>
-            <div class="card">
-                <span class="card-tag">Publikacje</span>
-                <h3>Ministerstwo Cyfryzacji</h3>
-                <p>Współautor raportu „Uczenie ustawiczne w zakresie sztucznej inteligencji", przygotowanego na zlecenie Ministerstwa Cyfryzacji.</p>
-            </div>
+    <!-- Hero Section -->
+    <header class="relative h-screen flex flex-col justify-center overflow-hidden px-6 md:px-20">
+        <div
+            id="bg-ai"
+            class="absolute right-[-8%] bottom-[-18%] font-black tracking-tighter leading-none select-none pointer-events-none opacity-[0.06]"
+            style="font-size: clamp(10rem, 40vw, 50rem);"
+        >
+            AI
         </div>
-    </section>
 
-    <section id="expertise">
-        <div class="section-header">Kompetencje</div>
-        <div class="expertise-list">
-            <div class="expertise-item">Strategia AI</div>
-            <div class="expertise-item">Generatywna AI</div>
-            <div class="expertise-item">AI dla sektora prawnego</div>
-            <div class="expertise-item">Wdrożenia AI w biznesie</div>
-            <div class="expertise-item">AI w edukacji</div>
-            <div class="expertise-item">AI w administracji</div>
-            <div class="expertise-item">Projektowanie systemów AI</div>
-            <div class="expertise-item">Szkolenia & warsztaty</div>
-        </div>
-    </section>
+        <img
+            src="me.png"
+            alt=""
+            aria-hidden="true"
+            class="absolute right-0 bottom-0 h-[95%] w-auto object-cover object-top select-none pointer-events-none"
+            style="opacity: 0.22; mask-image: linear-gradient(to right, transparent 0%, black 35%), linear-gradient(to top, transparent 0%, black 12%); mask-composite: intersect; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 35%), linear-gradient(to top, transparent 0%, black 12%); -webkit-mask-composite: source-in;"
+        >
 
-    <section id="references">
-        <div class="section-header">Doświadczenie szkoleniowe</div>
-        <div class="experience-highlight">
-            <div class="experience-stat">
-                <span class="stat-number">2018</span>
+        <div class="z-10 flex flex-col items-start w-full max-w-7xl">
+            <h1 class="text-[14vw] md:text-[12vw] font-black leading-none tracking-tighter uppercase text-left fade-up visible">
+                <span class="text-orange-500">AI</span> W PRAKTYCE
+            </h1>
+            <div class="flex items-start gap-4 mt-8 px-1 fade-up visible" style="transition-delay: 0.12s;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7 md:w-10 md:h-10 flex-shrink-0 mt-1"><path d="m7 7 10 10"/><path d="M17 7v10H7"/></svg>
+                <p class="text-base md:text-2xl font-medium tracking-tight max-w-lg uppercase">
+                    Od strategii do wdrożenia. Sztuczna inteligencja w biznesie, administracji i edukacji.
+                </p>
             </div>
-            <div class="experience-text">
-                Projektuję i prowadzę szkolenia z&nbsp;AI. Pracowałem z&nbsp;wyższymi urzędnikami ministerstw, kadrą menedżerską, prawnikami, nauczycielami i&nbsp;studentami studiów podyplomowych.
+            <div class="mt-10 px-1 fade-up visible" style="transition-delay: 0.24s;">
+                <a href="#contact" class="group inline-flex items-center gap-3 bg-orange-500 hover:bg-orange-400 active:bg-orange-600 text-black font-bold text-sm md:text-base uppercase tracking-widest px-8 py-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-orange-500/30 no-underline">
+                    Napisz do mnie
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
             </div>
         </div>
-        <div class="training-list">
-            <div class="training-item">
-                <div class="marker">01</div>
-                <div>
-                    <strong>Studia podyplomowe</strong>
-                    <p>Akademia Leona Koźmińskiego - współtwórca i wykładowca trzech programów: Biznes.AI (zarządzanie projektami AI), Prawo Sztucznej Inteligencji oraz Szkoła IT dla Prawników.</p>
+    </header>
+
+    <!-- Section: O mnie -->
+    <section id="about" class="relative min-h-screen py-20 md:py-32 px-6 md:px-20 flex items-center">
+        <div
+            id="bg-question"
+            class="absolute right-[-5%] top-1/4 font-black tracking-tighter leading-none select-none pointer-events-none text-white opacity-[0.05]"
+            style="font-size: clamp(20rem, 60vw, 80rem);"
+        >
+            ?
+        </div>
+
+        <div class="max-w-7xl w-full relative z-10">
+            <h2 class="text-[15vw] md:text-[8vw] font-black leading-none tracking-tighter mb-14 text-left fade-up">
+                KIM<br />JESTEM<span class="text-orange-500">.</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 items-center">
+                <div class="md:col-span-2 space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-xl leading-snug font-medium tracking-tight text-neutral-400 fade-up">
+                        <p>
+                            Przez wiele lat byłem związany z firmą <span class="text-white">Intel</span>, gdzie odpowiadałem za współpracę z europejskimi firmami rozwijającymi systemy AI.
+                        </p>
+                        <p>
+                            Dziś prowadzę <span class="text-white">niezależną praktykę doradczą</span> – pomagam firmom budować strategie AI i wdrażać rozwiązania dopasowane do realiów organizacji.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-xl leading-snug font-medium tracking-tight text-neutral-400 fade-up">
+                        <p>
+                            Jestem współtwórcą i prowadzącym zajęcia na <span class="text-white">Akademii Leona Koźmińskiego</span> – studia podyplomowe Biznes.AI oraz Prawo Sztucznej Inteligencji.
+                        </p>
+                        <p>
+                            Jestem współautorem raportu „Uczenie ustawiczne w zakresie sztucznej inteligencji" dla <span class="text-white">Ministerstwa Cyfryzacji</span>.
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="training-item">
-                <div class="marker">02</div>
-                <div>
-                    <strong>Administracja publiczna</strong>
-                    <p>Wielodniowe warsztaty AI dla kadry kierowniczej Ministerstwa Edukacji Narodowej, Ministerstwa Rozwoju i Technologii oraz organizacji Smart Africa, zrzeszającej 23 państwa afrykańskie.</p>
-                </div>
-            </div>
-            <div class="training-item">
-                <div class="marker">03</div>
-                <div>
-                    <strong>Firmy i korporacje</strong>
-                    <p>Dedykowane programy szkoleniowe realizowane we współpracy z różnymi partnerami (Asseco Data Systems, Think Tank, Koalicja na Rzecz Polskich Innowacji etc.) - dla firm z branży produkcyjnej, doradczej, IT i logistycznej.</p>
-                </div>
-            </div>
-            <div class="training-item">
-                <div class="marker">04</div>
-                <div>
-                    <strong>Środowisko prawnicze</strong>
-                    <p>Warsztaty dla Okręgowej Izby Radców Prawnych w Łodzi oraz cykle edukacyjne dla prawników w ramach programów akademickich.</p>
-                </div>
-            </div>
-            <div class="training-item">
-                <div class="marker">05</div>
-                <div>
-                    <strong>Edukacja i nauczyciele</strong>
-                    <p>Szkolenia dla nauczycieli i koordynatorów oświatowych z wykorzystania AI w szkole - m.in. we współpracy z Ośrodkiem Edukacji Informatycznej i Zastosowań Komputerów (OEIiZK) oraz Ministerstwem Edukacji Narodowej.</p>
+
+                <div class="fade-up flex justify-center md:justify-end order-first md:order-last">
+                    <div class="relative w-80 md:w-full max-w-[420px]">
+                        <div class="absolute inset-0 border-2 border-orange-500 translate-x-3 translate-y-3 pointer-events-none"></div>
+                        <img
+                            src="me.png"
+                            alt="Andrzej Jankowski"
+                            class="relative w-full object-cover transition-all duration-500"
+                        >
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="training">
-        <div class="section-header">Szkolenia</div>
-        <div class="about-grid">
-            <div class="card">
-                <span class="card-tag">Program</span>
-                <h3>Kompleksowy program szkoleń z AI</h3>
-                <p>Przygotowuję i prowadzę szkolenia z zakresu sztucznej inteligencji dla firm na każdym etapie transformacji - od pierwszych kroków po wdrożenia produkcyjne. Program jest zawsze dostosowany do specyfiki organizacji i poziomu uczestników.</p>
+    <!-- Section: Kompetencje -->
+    <section id="expertise" class="relative min-h-screen py-20 md:py-32 px-6 md:px-20 bg-white text-black overflow-hidden">
+        <div
+            id="bg-a"
+            class="absolute left-[-10%] top-0 font-black tracking-tighter leading-none select-none pointer-events-none text-[#f0f0f0]"
+            style="font-size: clamp(20rem, 70vw, 90rem);"
+        >
+            K
+        </div>
+
+        <div class="relative z-10 w-full max-w-7xl flex flex-col justify-end h-full">
+            <div class="flex justify-between items-end border-b-8 border-black pb-8 mb-16 fade-up">
+                <h2 class="text-[10vw] md:text-[8vw] font-black leading-none tracking-tighter">KOMPETENCJE<span class="text-orange-500">.</span></h2>
+                <div class="hidden md:flex gap-4 pb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12"><circle cx="12" cy="12" r="10"/></svg>
+                </div>
             </div>
-            <div class="card">
-                <span class="card-tag">Dla kogo?</span>
-                <h3>Trzy grupy odbiorców</h3>
-                <p>Szkolenia kieruję do trzech grup: kadry zarządzającej podejmującej decyzje strategiczne, zespołów technicznych wdrażających i integrujących rozwiązania AI oraz użytkowników końcowych, którzy na co dzień pracują z systemami opartymi na AI.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="group border-2 border-black p-8 hover:bg-black hover:text-white transition-colors duration-300 flex flex-col justify-between min-h-[250px] fade-up">
+                    <h3 class="text-5xl font-black tracking-tighter mb-4">01.</h3>
+                    <div>
+                        <h4 class="text-2xl font-bold uppercase mb-2">Strategia AI</h4>
+                        <p class="text-base font-medium leading-tight opacity-80">Projektowanie strategii transformacji cyfrowej z wykorzystaniem sztucznej inteligencji.</p>
+                    </div>
+                </div>
+                <div class="group border-2 border-black p-8 hover:bg-black hover:text-white transition-colors duration-300 flex flex-col justify-between min-h-[250px] fade-up">
+                    <h3 class="text-5xl font-black tracking-tighter mb-4">02.</h3>
+                    <div>
+                        <h4 class="text-2xl font-bold uppercase mb-2">Generatywna AI</h4>
+                        <p class="text-base font-medium leading-tight opacity-80">Modele językowe, systemy generatywne i ich praktyczne zastosowania w organizacjach.</p>
+                    </div>
+                </div>
+                <div class="group border-2 border-black p-8 hover:bg-black hover:text-white transition-colors duration-300 flex flex-col justify-between min-h-[250px] fade-up">
+                    <h3 class="text-5xl font-black tracking-tighter mb-4">03.</h3>
+                    <div>
+                        <h4 class="text-2xl font-bold uppercase mb-2">AI w biznesie</h4>
+                        <p class="text-base font-medium leading-tight opacity-80">Wdrożenia AI dopasowane do realiów firmy – od audytu po produkcyjne rozwiązania.</p>
+                    </div>
+                </div>
+                <div class="group border-2 border-black p-8 hover:bg-black hover:text-white transition-colors duration-300 flex flex-col justify-between min-h-[250px] fade-up">
+                    <h3 class="text-5xl font-black tracking-tighter mb-4">04.</h3>
+                    <div>
+                        <h4 class="text-2xl font-bold uppercase mb-2">Szkolenia</h4>
+                        <p class="text-base font-medium leading-tight opacity-80">Warsztaty i programy szkoleniowe dla kadry zarządzającej, zespołów technicznych i użytkowników końcowych.</p>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <span class="card-tag">Tematyka</span>
-                <h3>Co obejmuje program?</h3>
-                <p>Tematyka szkoleń odpowiada na realne potrzeby organizacji wdrażających AI. Omawiam transformację cyfrową i gotowość firmy na AI, pomagam w wyborze i ocenie dostępnych rozwiązań, wyjaśniam techniczne zasady działania modeli językowych i systemów AI, a także przybliżam aspekty prawne - w tym wymagania wynikające z unijnego AI Act i przepisów RODO.</p>
-            </div>
-            <div class="card">
-                <span class="card-tag">Forma</span>
-                <h3>Forma i organizacja</h3>
-                <p>Szkolenia prowadzę stacjonarnie lub zdalnie, w formacie dopasowanym do grupy: od kilkugodzinnych warsztatów po wielodniowe programy obejmujące całą organizację. Każde szkolenie kończy się materiałami do pracy własnej i możliwością follow-upu.</p>
+
+            <div class="flex flex-wrap gap-4 mt-12 fade-up">
+                <span class="border-2 border-black px-4 md:px-6 py-2 md:py-3 text-sm md:text-lg font-bold uppercase tracking-tight hover:bg-black hover:text-white transition-colors cursor-default">AI dla sektora prawnego</span>
+                <span class="border-2 border-black px-4 md:px-6 py-2 md:py-3 text-sm md:text-lg font-bold uppercase tracking-tight hover:bg-black hover:text-white transition-colors cursor-default">AI w edukacji</span>
+                <span class="border-2 border-black px-4 md:px-6 py-2 md:py-3 text-sm md:text-lg font-bold uppercase tracking-tight hover:bg-black hover:text-white transition-colors cursor-default">AI w administracji</span>
+                <span class="border-2 border-black px-4 md:px-6 py-2 md:py-3 text-sm md:text-lg font-bold uppercase tracking-tight hover:bg-black hover:text-white transition-colors cursor-default">Projektowanie systemów AI</span>
             </div>
         </div>
     </section>
 
-    <section id="projects">
-        <div class="section-header">Małe projekty</div>
-        <div class="projects-grid">
-            <a href="https://workszop.org" class="project-card" target="_blank" rel="noopener">
-                <span class="project-icon">&#x1F9F1;</span>
-                <h3>KlockiAI</h3>
-                <p>Wytrenuj własny model rozpoznawania obrazów w przeglądarce - bez kodu, bez chmury. Kamerka internetowa i komputer wystarczy.</p>
-                <span class="project-url">workszop.org &rarr;</span>
-            </a>
-            <a href="https://mobi.workszop.org" class="project-card" target="_blank" rel="noopener">
-                <span class="project-icon">&#x1F4F1;</span>
-                <h3>KlockiAI Mobile</h3>
-                <p>Mobilna wersja KlockiAI. Smartfon jako laboratorium AI, w całości na urządzeniu, bez wysyłania danych.</p>
-                <span class="project-url">mobi.workszop.org &rarr;</span>
-            </a>
-            <a href="https://beehonest.eu" class="project-card" target="_blank" rel="noopener">
-                <span class="project-icon">&#x1F41D;</span>
-                <h3>BeeHonest</h3>
-                <p>BeeHonest to mała gra która pozwala się lepiej poznać.</p>
-                <span class="project-url">beehonest.eu &rarr;</span>
-            </a>
+    <!-- Section: Doświadczenie -->
+    <section id="references" class="relative min-h-screen py-20 md:py-32 px-6 md:px-20 flex items-center">
+        <div
+            class="absolute left-[-5%] top-1/4 font-black tracking-tighter leading-none select-none pointer-events-none text-white opacity-[0.05]"
+            style="font-size: clamp(15rem, 50vw, 70rem);"
+            id="bg-2018"
+        >
+            2018
+        </div>
+
+        <div class="max-w-7xl w-full relative z-10">
+            <h2 class="text-[12vw] md:text-[8vw] font-black leading-none tracking-tighter mb-6 text-left fade-up">
+                DOŚWIAD&shy;CZENIE<span class="text-orange-500">.</span>
+            </h2>
+            <p class="text-xl md:text-3xl font-medium tracking-tight text-neutral-400 max-w-3xl mb-16 fade-up">
+                Od <span class="text-white">2018 roku</span> projektuję i prowadzę szkolenia z AI. Pracowałem z wyższymi urzędnikami ministerstw, kadrą menedżerską, prawnikami, nauczycielami i studentami.
+            </p>
+
+            <div class="space-y-6">
+                <div class="group flex items-start gap-8 border-b border-neutral-800 pb-6 hover:border-neutral-500 transition-colors fade-up">
+                    <span class="text-4xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors flex-shrink-0">01</span>
+                    <div class="pt-2 md:pt-4">
+                        <h3 class="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-2">Studia podyplomowe</h3>
+                        <p class="text-lg text-neutral-400 font-medium leading-snug">Akademia Leona Koźmińskiego – współtwórca i wykładowca trzech programów: Biznes.AI, Prawo Sztucznej Inteligencji oraz Szkoła IT dla Prawników.</p>
+                    </div>
+                </div>
+                <div class="group flex items-start gap-8 border-b border-neutral-800 pb-6 hover:border-neutral-500 transition-colors fade-up">
+                    <span class="text-4xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors flex-shrink-0">02</span>
+                    <div class="pt-2 md:pt-4">
+                        <h3 class="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-2">Administracja publiczna</h3>
+                        <p class="text-lg text-neutral-400 font-medium leading-snug">Wielodniowe warsztaty AI dla kadry kierowniczej Ministerstwa Edukacji Narodowej, Ministerstwa Rozwoju i Technologii oraz organizacji Smart Africa.</p>
+                    </div>
+                </div>
+                <div class="group flex items-start gap-8 border-b border-neutral-800 pb-6 hover:border-neutral-500 transition-colors fade-up">
+                    <span class="text-4xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors flex-shrink-0">03</span>
+                    <div class="pt-2 md:pt-4">
+                        <h3 class="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-2">Firmy i korporacje</h3>
+                        <p class="text-lg text-neutral-400 font-medium leading-snug">Dedykowane programy szkoleniowe we współpracy z Asseco Data Systems, Think Tank, Koalicją na Rzecz Polskich Innowacji – dla branży produkcyjnej, doradczej, IT i logistycznej.</p>
+                    </div>
+                </div>
+                <div class="group flex items-start gap-8 border-b border-neutral-800 pb-6 hover:border-neutral-500 transition-colors fade-up">
+                    <span class="text-4xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors flex-shrink-0">04</span>
+                    <div class="pt-2 md:pt-4">
+                        <h3 class="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-2">Środowisko prawnicze</h3>
+                        <p class="text-lg text-neutral-400 font-medium leading-snug">Warsztaty dla Okręgowej Izby Radców Prawnych w Łodzi oraz cykle edukacyjne dla prawników w ramach programów akademickich.</p>
+                    </div>
+                </div>
+                <div class="group flex items-start gap-8 border-b border-neutral-800 pb-6 hover:border-neutral-500 transition-colors fade-up">
+                    <span class="text-4xl md:text-7xl font-black tracking-tighter text-neutral-800 group-hover:text-orange-500 transition-colors flex-shrink-0">05</span>
+                    <div class="pt-2 md:pt-4">
+                        <h3 class="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-2">Edukacja i nauczyciele</h3>
+                        <p class="text-lg text-neutral-400 font-medium leading-snug">Szkolenia dla nauczycieli z wykorzystania AI w szkole – we współpracy z OEIiZK oraz Ministerstwem Edukacji Narodowej.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="contact">
-        <div class="section-header">Kontakt</div>
-        <div class="contact-box">
-            <h3>Porozmawiajmy_</h3>
-            <p>Szukasz eksperta AI do konsultacji, szkolenia lub współpracy przy wdrożeniu? Napisz do mnie.</p>
-            <a href="mailto:andrzej@edulab.dev" class="contact-link">andrzej@edulab.dev</a>
+    <!-- Section: Szkolenia -->
+    <section id="training" class="relative min-h-screen flex items-center py-20 md:py-32 px-6 md:px-20 overflow-hidden">
+        <img
+            src="left.png"
+            alt=""
+            aria-hidden="true"
+            class="absolute right-0 top-0 h-full w-auto object-cover object-left select-none pointer-events-none"
+            style="opacity: 0.55; filter: invert(1); mask-image: linear-gradient(to right, transparent 0%, black 40%), linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%); mask-composite: intersect; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 40%), linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%); -webkit-mask-composite: source-in;"
+        >
+
+
+        <div class="relative z-10 max-w-7xl w-full">
+            <h2 class="text-[14vw] md:text-[8vw] font-black tracking-tighter leading-none mb-12 text-white text-left fade-up">
+                SZKOLENIA<span class="text-orange-500">.</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl">
+                <div class="bg-neutral-900 border border-neutral-800 p-8 hover:border-orange-500 transition-colors duration-300 fade-up">
+                    <div class="w-10 h-10 bg-orange-500 mb-6 flex items-center justify-center flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold uppercase tracking-tight mb-4 text-white">Program</h3>
+                    <p class="text-lg text-neutral-400 font-medium leading-snug">
+                        Przygotowuję i prowadzę szkolenia z zakresu sztucznej inteligencji dla firm na każdym etapie transformacji – od pierwszych kroków po wdrożenia produkcyjne. Program jest zawsze dostosowany do specyfiki organizacji.
+                    </p>
+                </div>
+                <div class="bg-neutral-900 border border-neutral-800 p-8 hover:border-orange-500 transition-colors duration-300 fade-up">
+                    <div class="w-10 h-10 bg-orange-500 mb-6 flex items-center justify-center flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold uppercase tracking-tight mb-4 text-white">Dla kogo?</h3>
+                    <p class="text-lg text-neutral-400 font-medium leading-snug">
+                        Szkolenia kieruję do trzech grup: kadry zarządzającej podejmującej decyzje strategiczne, zespołów technicznych wdrażających rozwiązania AI oraz użytkowników końcowych pracujących z systemami AI.
+                    </p>
+                </div>
+                <div class="bg-neutral-900 border border-neutral-800 p-8 hover:border-orange-500 transition-colors duration-300 fade-up">
+                    <div class="w-10 h-10 bg-orange-500 mb-6 flex items-center justify-center flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold uppercase tracking-tight mb-4 text-white">Tematyka</h3>
+                    <p class="text-lg text-neutral-400 font-medium leading-snug">
+                        Transformacja cyfrowa i gotowość firmy na AI, wybór i ocena rozwiązań, techniczne zasady działania modeli językowych, aspekty prawne – w tym AI Act i RODO.
+                    </p>
+                </div>
+                <div class="bg-neutral-900 border border-neutral-800 p-8 hover:border-orange-500 transition-colors duration-300 fade-up">
+                    <div class="w-10 h-10 bg-orange-500 mb-6 flex items-center justify-center flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold uppercase tracking-tight mb-4 text-white">Forma</h3>
+                    <p class="text-lg text-neutral-400 font-medium leading-snug">
+                        Stacjonarnie lub zdalnie, od kilkugodzinnych warsztatów po wielodniowe programy. Każde szkolenie kończy się materiałami do pracy własnej i możliwością follow-upu.
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <footer>
-        <span>&copy; 2026</span> Ekspert AI
+    <!-- Section: Projekty -->
+    <section class="relative py-20 md:py-32 px-6 md:px-20 bg-white text-black overflow-hidden">
+        <img
+            src="klocki.png"
+            alt=""
+            aria-hidden="true"
+            class="absolute right-[-15%] top-1/2 w-[95%] max-w-5xl select-none pointer-events-none"
+            style="transform: translateY(-30%) rotate(10deg); opacity: 0.28;"
+        >
+
+
+        <div class="relative z-10 w-full max-w-7xl">
+            <div class="flex justify-between items-end border-b-8 border-black pb-8 mb-16 fade-up">
+                <h2 class="leading-none tracking-tighter text-left">
+                    <span class="text-[10vw] md:text-[8vw] font-black block">MICRO</span>
+                    <span class="text-[3vw] md:text-[2vw] font-medium block mt-2 uppercase">PROJEKTY</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                <a href="https://workszop.org" target="_blank" rel="noopener" class="group border-2 border-black p-8 hover:bg-black hover:text-white transition-colors duration-300 flex flex-col justify-between min-h-[300px] no-underline text-black fade-up">
+                    <div class="w-12 h-12 bg-black group-hover:bg-orange-500 transition-colors duration-300 flex items-center justify-center mb-4 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-bold uppercase mb-3">KlockiAI</h4>
+                        <p class="text-base font-medium leading-tight opacity-80 mb-4">Wytrenuj własny model rozpoznawania obrazów w przeglądarce – bez kodu, bez chmury.</p>
+                        <span class="text-sm font-bold uppercase tracking-widest group-hover:text-orange-500 transition-colors">workszop.org &rarr;</span>
+                    </div>
+                </a>
+                <a href="https://mobi.workszop.org" target="_blank" rel="noopener" class="group border-2 border-black p-8 hover:bg-black hover:text-white transition-colors duration-300 flex flex-col justify-between min-h-[300px] no-underline text-black fade-up">
+                    <div class="w-12 h-12 bg-black group-hover:bg-orange-500 transition-colors duration-300 flex items-center justify-center mb-4 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-bold uppercase mb-3">KlockiAI Mobile</h4>
+                        <p class="text-base font-medium leading-tight opacity-80 mb-4">Mobilna wersja KlockiAI. Smartfon jako laboratorium AI, w całości na urządzeniu.</p>
+                        <span class="text-sm font-bold uppercase tracking-widest group-hover:text-orange-500 transition-colors">mobi.workszop.org &rarr;</span>
+                    </div>
+                </a>
+                <a href="https://beehonest.eu" target="_blank" rel="noopener" class="group border-2 border-black p-8 hover:bg-black hover:text-white transition-colors duration-300 flex flex-col justify-between min-h-[300px] no-underline text-black fade-up">
+                    <div class="w-12 h-12 bg-black group-hover:bg-orange-500 transition-colors duration-300 flex items-center justify-center mb-4 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="text-3xl font-bold uppercase mb-3">BeeHonest</h4>
+                        <p class="text-base font-medium leading-tight opacity-80 mb-4">BeeHonest to mała gra która pozwala się lepiej poznać.</p>
+                        <span class="text-sm font-bold uppercase tracking-widest group-hover:text-orange-500 transition-colors">beehonest.eu &rarr;</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Kontakt -->
+    <section id="contact" class="relative min-h-[70vh] flex items-center py-20 md:py-32 px-6 md:px-20 overflow-hidden">
+        <div class="absolute inset-0 flex flex-col justify-center items-center opacity-[0.04] pointer-events-none select-none">
+            <div class="text-[25vw] font-black leading-[0.8] tracking-tighter whitespace-nowrap">KONTAKT</div>
+            <div class="text-[25vw] font-black leading-[0.8] tracking-tighter whitespace-nowrap">KONTAKT</div>
+            <div class="text-[25vw] font-black leading-[0.8] tracking-tighter whitespace-nowrap">KONTAKT</div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-7xl">
+            <h2 class="text-[10vw] md:text-[8vw] font-black tracking-tighter leading-none mb-8 text-white text-left fade-up">
+                POROZMAWIAJMY<span class="text-orange-500">.</span>
+            </h2>
+            <p class="text-xl md:text-3xl font-medium tracking-tight leading-tight max-w-2xl text-neutral-400 fade-up">
+                Szukasz eksperta AI do konsultacji, szkolenia lub współpracy przy wdrożeniu?
+            </p>
+            <div class="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-6 mt-12 fade-up">
+                <a href="mailto:andrzej@edulab.dev" class="group inline-flex items-center gap-4 text-lg md:text-3xl font-bold uppercase tracking-widest border-b-4 border-white pb-2 hover:text-orange-500 hover:border-orange-500 transition-colors no-underline text-white">
+                    andrzej@edulab.dev
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7 group-hover:translate-x-3 transition-transform flex-shrink-0"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/crazyai" target="_blank" rel="noopener" class="inline-flex items-center gap-3 border-2 border-neutral-700 hover:border-orange-500 text-neutral-400 hover:text-orange-500 px-6 py-3 text-sm font-bold uppercase tracking-widest transition-colors no-underline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                    LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#050505] text-white py-12 md:py-20 px-6 md:px-20 relative overflow-hidden border-t border-neutral-900">
+        <div class="text-[40vw] font-black leading-none absolute -bottom-20 -right-10 opacity-[0.04] pointer-events-none select-none">.</div>
+
+        <div class="max-w-7xl w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-8 relative z-10">
+            <div>
+                <h2 class="text-4xl md:text-8xl font-black tracking-tighter uppercase mb-3">
+                    edulab<span class="text-orange-500">.</span>
+                </h2>
+                <p class="text-base font-medium uppercase tracking-widest text-neutral-500">
+                    AI w praktyce – od strategii do wdrożenia.
+                </p>
+            </div>
+
+            <div class="flex flex-col items-start md:items-end gap-4">
+                <nav class="flex flex-wrap gap-5 text-sm font-semibold uppercase tracking-widest text-neutral-400">
+                    <a href="#about" class="hover:text-orange-500 transition-colors no-underline">O mnie</a>
+                    <a href="#expertise" class="hover:text-orange-500 transition-colors no-underline">Kompetencje</a>
+                    <a href="#training" class="hover:text-orange-500 transition-colors no-underline">Szkolenia</a>
+                    <a href="#contact" class="hover:text-orange-500 transition-colors no-underline">Kontakt</a>
+                </nav>
+                <p class="text-xs uppercase tracking-widest text-neutral-600">&copy; 2026 Edulab. Andrzej Jankowski.</p>
+            </div>
+        </div>
     </footer>
 
+    <script>
+        // Nav scroll state
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        }, { passive: true });
+
+        // Mobile menu toggle
+        const navToggle = document.getElementById('nav-toggle');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        navToggle.addEventListener('click', () => {
+            const isOpen = mobileNav.classList.contains('open');
+            mobileNav.classList.toggle('open', !isOpen);
+            navToggle.classList.toggle('open', !isOpen);
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('open');
+                navToggle.classList.remove('open');
+            });
+        });
+
+        // Scroll spy — highlight active section in nav
+        const spySections = ['about', 'expertise', 'references', 'training', 'contact'];
+        const allNavLinks = document.querySelectorAll('#navbar a[href^="#"], #mobile-nav a[href^="#"]');
+
+        const setActive = (id) => {
+            allNavLinks.forEach(link => {
+                link.classList.toggle('nav-active', link.getAttribute('href') === `#${id}`);
+            });
+        };
+
+        const spyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) setActive(entry.target.id);
+            });
+        }, { rootMargin: '-40% 0px -55% 0px' });
+
+        spySections.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) spyObserver.observe(el);
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-up:not(.visible)').forEach((el, i) => {
+            const siblings = Array.from(el.parentElement.querySelectorAll('.fade-up:not(.visible)'));
+            const idx = siblings.indexOf(el);
+            if (idx > 0) el.style.transitionDelay = `${idx * 0.09}s`;
+            observer.observe(el);
+        });
+
+        // Parallax
+        const bgAi = document.getElementById('bg-ai');
+        const bgQ  = document.getElementById('bg-question');
+        const bgA  = document.getElementById('bg-a');
+        const bg2018 = document.getElementById('bg-2018');
+
+        window.addEventListener('scroll', () => {
+            requestAnimationFrame(() => {
+                const y = window.pageYOffset;
+                if (bgAi)   bgAi.style.transform   = `translateY(${y * 0.2}px)`;
+                if (bgQ)    bgQ.style.transform     = `translateY(${-(y * 0.15)}px)`;
+                if (bgA)    bgA.style.transform     = `translateX(${y * 0.1}px)`;
+                if (bg2018) bg2018.style.transform  = `translateX(${-(y * 0.08)}px)`;
+            });
+        }, { passive: true });
+    </script>
 </body>
 </html>
