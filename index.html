@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="pl" class="scroll-smooth">
+<html lang="pl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI w praktyce – od strategii do wdrożenia | Edulab</title>
-<meta name="description" content="Ekspert AI – szkolenia, doradztwo i wdrożenia sztucznej inteligencji dla firm, administracji i edukacji. Od strategii do wdrożenia.">
-<meta property="og:title" content="AI w praktyce – od strategii do wdrożenia | Edulab">
-<meta property="og:description" content="Ekspert AI – szkolenia, doradztwo i wdrożenia sztucznej inteligencji dla firm, administracji i edukacji.">
+<title>Andrzej Jankowski | Szkolenia, strategia i wdrożenia AI</title>
+<meta name="description" content="Pomagam zespołom korzystać z AI, a organizacjom przechodzić od pomysłu do wdrożenia. Andrzej Jankowski: szkolenia, doradztwo i projekty z Quantica Lab.">
+<meta property="og:title" content="Andrzej Jankowski | Szkolenia, strategia i wdrożenia AI">
+<meta property="og:description" content="Pomagam zespołom korzystać z AI, a organizacjom przechodzić od pomysłu do wdrożenia. Szkolenia, doradztwo i projekty z Quantica Lab.">
 <meta property="og:image" content="https://andrzej.ai/og.jpg">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#FFFDF7">
@@ -39,23 +39,32 @@
 
 /* ─── Base ─── */
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
 img { max-width: 100%; display: block; }
 a { color: inherit; }
 h1, h2, h3, h4, p, ul { margin: 0; }
 ul { padding: 0; list-style: none; }
 :focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; border-radius: 6px; }
+::selection { background: var(--sun); color: var(--fg); }
 .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 40px; }
 section { padding: 88px 0; }
 h2 { font-weight: 800; font-size: clamp(30px, 3.6vw, 40px); letter-spacing: -0.03em; line-height: 1.05; }
+h3 { font-weight: 700; font-size: 22px; letter-spacing: -0.02em; }
+.label { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; color: var(--fg-2); margin-bottom: 12px; }
+.label::before { content: ''; width: 10px; height: 10px; border-radius: 3px; background: var(--c, var(--sun)); }
 .sub { color: var(--fg-2); font-size: 18px; margin-top: 12px; max-width: 60ch; }
+.head { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
+.head .sub { margin-top: 0; }
 .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 700; padding: 14px 24px; border-radius: 14px; transition: transform .2s var(--ease), background .2s var(--ease); }
 .btn:hover { transform: translateY(-2px); }
 .btn.primary { background: var(--coral); color: var(--white); }
 .btn.ghost { background: var(--bg-2); color: var(--fg); }
 .skip { position: absolute; left: 16px; top: -60px; background: var(--fg); color: var(--white); padding: 10px 16px; border-radius: 10px; z-index: 100; text-decoration: none; }
 .skip:focus { top: 16px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.link { font-weight: 700; color: var(--sky); text-decoration: none; }
+.link:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 /* ─── Nav ─── */
 .nav { position: sticky; top: 0; z-index: 40; background: rgba(255,253,247,.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid transparent; transition: border-color .3s var(--ease); }
@@ -63,11 +72,13 @@ h2 { font-weight: 800; font-size: clamp(30px, 3.6vw, 40px); letter-spacing: -0.0
 .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 23px; letter-spacing: -0.02em; }
 .logo img { height: 36px; width: auto; }
-.nav ul { display: flex; align-items: center; gap: 28px; font-size: 16px; font-weight: 500; }
+.logo small { font-size: 14px; font-weight: 500; color: var(--fg-2); border: 1.5px solid var(--line); border-radius: 999px; padding: 4px 10px; margin-left: 4px; }
+.nav ul { display: flex; align-items: center; gap: 24px; font-size: 16px; font-weight: 500; }
 .nav ul a { color: var(--fg-2); text-decoration: none; padding: 6px 0; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
 .nav ul a:hover, .nav ul a.active { color: var(--fg); border-bottom-color: var(--sun); }
 .nav ul a.cta { background: var(--fg); color: var(--white); padding: 10px 18px; border-radius: 12px; border: 0; }
 .nav ul a.cta:hover { background: var(--sky); }
+.progress { position: absolute; left: 0; bottom: -1px; height: 3px; width: 0; background: var(--sun); }
 .burger { display: none; background: none; border: 0; padding: 8px; cursor: pointer; }
 .burger span { display: block; width: 24px; height: 2.5px; background: var(--fg); border-radius: 2px; margin: 5px 0; transition: transform .3s var(--ease), opacity .3s; }
 .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
@@ -80,12 +91,16 @@ h2 { font-weight: 800; font-size: clamp(30px, 3.6vw, 40px); letter-spacing: -0.0
 /* ─── Hero ─── */
 .hero { padding: 40px 0 72px; }
 .hero .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
+.hero .label { margin-bottom: 18px; }
 h1 { font-weight: 800; font-size: clamp(44px, 6vw, 76px); line-height: 1.0; letter-spacing: -0.035em; }
 h1 .b { display: inline-block; padding: 0 .18em; border-radius: .18em; color: var(--white); background: var(--sky); transform: rotate(-2deg); }
-.hero .lead { font-size: 20px; line-height: 1.5; color: var(--fg-2); margin: 24px 0 28px; max-width: 34ch; }
+.hero .lead { font-size: 20px; line-height: 1.5; color: var(--fg-2); margin: 24px 0 28px; max-width: 40ch; }
 .hero .actions { display: flex; gap: 10px; flex-wrap: wrap; }
-.stack { position: relative; height: 460px; }
+.stack { position: relative; height: 460px; margin: 0; }
 .stack img { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); height: 100%; width: auto; max-width: none; object-fit: cover; object-position: top; border-radius: var(--r-xl); z-index: 2; }
+.stack figcaption { position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 4; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px 16px; font-size: 14px; line-height: 1.35; white-space: nowrap; box-shadow: 0 10px 30px rgba(31,36,48,.12); }
+.stack figcaption strong { display: block; font-weight: 700; }
+.stack figcaption span { color: var(--fg-2); }
 .blk { position: absolute; border-radius: 16px; }
 .blk.a { width: 120px; height: 120px; background: var(--sun); left: 0; top: 40px; transform: rotate(-8deg); }
 .blk.b { width: 90px; height: 90px; background: var(--mint); right: 0; top: 120px; transform: rotate(10deg); z-index: 3; }
@@ -97,62 +112,80 @@ h1 .b { display: inline-block; padding: 0 .18em; border-radius: .18em; color: va
 
 /* ─── Proof strip ─── */
 .proof { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 0; }
-.proof .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
-.proof div { padding: 22px 20px 22px 0; font-size: 15px; color: var(--fg-2); line-height: 1.4; }
-.proof b { display: block; color: var(--fg); font-weight: 700; font-size: 16px; }
+.proof .wrap { display: grid; grid-template-columns: repeat(3, 1fr); }
+.proof div { padding: 22px 24px 22px 0; font-size: 15px; color: var(--fg-2); line-height: 1.4; }
+.proof b { display: block; color: var(--fg); font-weight: 700; font-size: 17px; }
 .proof i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; vertical-align: 1px; }
 
+/* ─── Offer: three paths ─── */
+.services { margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.service { border-radius: var(--r-lg); padding: 28px; display: flex; flex-direction: column; gap: 14px; background: var(--white); border: 1px solid var(--line); }
+.service.sky { background: var(--sky); color: var(--white); border: 0; }
+.service.sun { background: var(--sun); color: var(--fg); border: 0; }
+.service.mint { background: var(--mint); color: var(--white); border: 0; }
+.service .kind { align-self: flex-start; font-size: 14px; font-weight: 600; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.22); }
+.service.sun .kind { background: rgba(31,36,48,.1); }
+.service p { font-size: 16px; line-height: 1.5; opacity: .92; }
+.service ul { font-size: 15px; line-height: 1.45; display: grid; gap: 8px; padding-left: 18px; list-style: disc; opacity: .92; }
+.service a { margin-top: auto; font-weight: 700; text-decoration: none; padding-top: 8px; }
+.service a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ─── Training ─── */
+.train { background: var(--bg-2); }
+.train .wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; }
+.train .intro p { color: var(--fg-2); font-size: 18px; line-height: 1.55; margin-top: 16px; max-width: 38ch; }
+.train .format { margin-top: 28px; padding: 22px 24px; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-md); }
+.train .format strong { display: block; font-weight: 700; margin-bottom: 6px; }
+.train .format p { font-size: 16px; margin-top: 0; max-width: none; }
+.acc { display: grid; gap: 12px; }
+details { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; }
+details[open] { border-color: var(--fg); }
+summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; font-weight: 700; font-size: 20px; letter-spacing: -0.02em; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: '+'; flex-shrink: 0; width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: var(--sun); color: var(--fg); font-weight: 700; }
+details[open] > summary::after { content: '−'; }
+.acc-body { padding: 0 24px 22px; color: var(--fg-2); font-size: 16px; line-height: 1.55; }
+.acc-body p + p { margin-top: 10px; }
+.acc-body strong { color: var(--fg); font-weight: 700; }
+.train .cta { margin-top: 20px; }
+
+/* ─── Experience ─── */
+.exp .grid { margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.exp article { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 26px; border-top: 6px solid var(--c); }
+.exp article .label { margin-bottom: 8px; }
+.exp article .label::before { display: none; }
+.exp article h3 { margin-bottom: 8px; }
+.exp article p { font-size: 16px; line-height: 1.5; color: var(--fg-2); }
+
 /* ─── About ─── */
+.about { background: var(--bg-2); }
 .about .wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; }
 .about p { font-size: 18px; line-height: 1.6; color: var(--fg-2); margin-bottom: 16px; max-width: 62ch; }
 .about strong { color: var(--fg); font-weight: 700; }
 .about .mark { display: inline-block; padding: 0 .25em; border-radius: .3em; background: var(--sun); color: var(--fg); font-weight: 700; }
+.about .note { margin-top: 8px; padding: 20px 24px; background: var(--mint); color: var(--white); border-radius: var(--r-md); font-size: 16px; line-height: 1.5; }
+.about .note strong { color: var(--white); display: block; margin-bottom: 4px; }
 
-/* ─── Bento ─── */
-.bento { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: minmax(200px, auto); gap: 16px; }
-.cell { border-radius: var(--r-lg); padding: 26px; display: flex; flex-direction: column; gap: 10px; background: var(--white); border: 1px solid var(--line); }
-.cell.big { grid-column: span 2; }
-.cell.sky { background: var(--sky); color: var(--white); border: 0; }
-.cell.sun { background: var(--sun); color: var(--fg); border: 0; }
-.cell.mint { background: var(--mint); color: var(--white); border: 0; }
-.cell h3 { font-weight: 700; font-size: 23px; letter-spacing: -0.02em; }
-.cell p { font-size: 16px; line-height: 1.5; opacity: .92; }
-.cell .dot { width: 14px; height: 14px; border-radius: 4px; background: var(--coral); margin-bottom: auto; }
-.tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-.tags span { border: 1.5px solid var(--line); background: var(--white); border-radius: 999px; padding: 8px 16px; font-size: 15px; font-weight: 500; }
-
-/* ─── Experience ─── */
-.exp { background: var(--bg-2); }
-.exp .head { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
-.exp .head p { font-size: 18px; line-height: 1.55; color: var(--fg-2); }
-.exp .grid { margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.exp article { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 26px; border-top: 6px solid var(--c); }
-.exp article h3 { font-weight: 700; font-size: 21px; letter-spacing: -0.02em; margin-bottom: 8px; }
-.exp article p { font-size: 16px; line-height: 1.5; color: var(--fg-2); }
-
-/* ─── Training ─── */
-.train .grid { margin-top: 32px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.train article { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 28px; background: var(--white); display: grid; grid-template-columns: 52px 1fr; gap: 18px; }
-.train .ic { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; color: var(--white); }
-.train h3 { font-weight: 700; font-size: 22px; letter-spacing: -0.02em; margin-bottom: 8px; }
-.train p { font-size: 16px; line-height: 1.55; color: var(--fg-2); }
-
-/* ─── Projects ─── */
-.proj { background: var(--bg-2); }
-.proj .grid { margin-top: 32px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.proj a { text-decoration: none; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 24px; display: flex; flex-direction: column; gap: 8px; transition: transform .2s var(--ease); }
-.proj a:hover { transform: translateY(-3px); }
-.proj a b { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-top: 8px; }
-.proj a p { font-size: 16px; line-height: 1.5; color: var(--fg-2); flex: 1; }
-.proj a span { font-weight: 600; color: var(--sky); font-size: 15px; }
-.proj .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: var(--white); }
+/* ─── Tools ─── */
+.proj .grid { margin-top: 32px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.proj article { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 24px; display: flex; flex-direction: column; gap: 8px; }
+.proj article .label { margin-bottom: 0; }
+.proj article h3 { margin-top: 6px; }
+.proj article p { font-size: 16px; line-height: 1.5; color: var(--fg-2); }
+.proj article p.privacy { font-size: 14px; }
+.proj .links { margin-top: auto; padding-top: 12px; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 15px; }
+.proj .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: var(--white); margin-bottom: 4px; }
 
 /* ─── Contact ─── */
-.contact .wrap { background: var(--fg); color: var(--white); border-radius: var(--r-xl); padding: 56px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 32px; }
-.contact p { opacity: .82; margin-top: 10px; font-size: 18px; max-width: 44ch; }
-.contact .links { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
-.contact .btn.mail { background: var(--sun); color: var(--fg); font-size: 18px; }
-.contact .btn.li { background: rgba(255,255,255,.12); color: var(--white); }
+.contact .wrap { background: var(--fg); color: var(--white); border-radius: var(--r-xl); padding: 56px; display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 48px; }
+.contact .label { color: rgba(255,255,255,.7); }
+.contact p { opacity: .82; margin-top: 12px; font-size: 18px; max-width: 44ch; }
+.contact .panel { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: var(--r-lg); padding: 28px; }
+.contact .panel strong { display: block; font-weight: 700; margin-bottom: 12px; }
+.contact .panel ul { display: grid; gap: 8px; padding-left: 18px; list-style: disc; opacity: .85; font-size: 16px; }
+.contact .panel .btn.mail { background: var(--sun); color: var(--fg); font-size: 18px; margin-top: 24px; }
+.contact .panel p { font-size: 15px; margin-top: 16px; }
+.contact .panel p a { color: var(--white); font-weight: 600; }
 
 /* ─── Footer ─── */
 footer { padding: 40px 0 48px; }
@@ -160,65 +193,68 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
 footer nav { display: flex; gap: 20px; }
 footer a { text-decoration: none; }
 footer a:hover { color: var(--fg); }
+#status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 
 /* ─── Responsive ─── */
 @media (max-width: 900px) {
-  .bento { grid-template-columns: 1fr 1fr; }
-  .exp .grid, .proj .grid { grid-template-columns: 1fr 1fr; }
+  .services, .exp .grid, .proj .grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 768px) {
   .wrap { padding: 0 20px; }
   section { padding: 64px 0; }
   .nav ul { display: none; }
   .burger { display: block; }
+  .logo small { display: none; }
   .hero { padding: 24px 0 56px; }
-  .hero .wrap, .about .wrap, .exp .head, .train .grid, .contact .wrap { grid-template-columns: 1fr; }
+  .hero .wrap, .head, .train .wrap, .about .wrap, .contact .wrap { grid-template-columns: 1fr; }
+  .head { gap: 12px; }
   .hero .wrap { gap: 32px; }
   .stack { height: 340px; }
   .stack img { width: 100%; height: auto; max-height: 340px; }
+  .stack figcaption { white-space: normal; width: calc(100% - 32px); }
   .blk.a { width: 80px; height: 80px; } .blk.c { width: 110px; height: 44px; }
-  .proof .wrap { grid-template-columns: 1fr 1fr; }
-  .bento { grid-template-columns: 1fr; grid-auto-rows: auto; }
-  .cell.big { grid-column: span 1; }
-  .exp .grid, .proj .grid { grid-template-columns: 1fr; }
-  .contact .wrap { padding: 36px 28px; }
-  .contact .links { width: 100%; }
-  .contact .links .btn { width: 100%; justify-content: center; }
+  .proof .wrap { grid-template-columns: 1fr; }
+  .proof div { padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .proof div:last-child { border-bottom: 0; }
+  .services, .exp .grid, .proj .grid { grid-template-columns: 1fr; }
+  .contact .wrap { padding: 36px 24px; gap: 28px; }
+  .contact .panel .btn.mail { width: 100%; justify-content: center; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .blk { animation: none; }
-  .btn, .proj a { transition: none; }
+  .btn { transition: none; }
 }
 </style>
 </head>
-<body>
+<body data-ready="false">
 <a class="skip" href="#main">Przejdź do treści</a>
 
 <!-- ─── Nav ─── -->
-<header class="nav" id="navbar">
+<header class="nav" id="navbar" data-menu="closed">
   <div class="wrap">
-    <a class="logo" href="#" aria-label="edulab – strona główna"><img src="horse.png" alt="" width="45" height="36">edulab</a>
-    <nav aria-label="Główna nawigacja">
+    <a class="logo" href="#main" aria-label="Edulab, początek strony"><img src="horse.png" alt="" width="45" height="36">edulab <small>Andrzej Jankowski</small></a>
+    <nav aria-label="Nawigacja główna">
       <ul>
-        <li><a href="#about">O mnie</a></li>
-        <li><a href="#expertise">Kompetencje</a></li>
-        <li><a href="#references">Doświadczenie</a></li>
-        <li><a href="#training">Szkolenia</a></li>
-        <li><a href="#projects">Projekty</a></li>
-        <li><a href="#contact" class="cta">Kontakt</a></li>
+        <li><a href="#oferta">Współpraca</a></li>
+        <li><a href="#szkolenia">Szkolenia</a></li>
+        <li><a href="#doswiadczenie">Doświadczenie</a></li>
+        <li><a href="#o-mnie">O mnie</a></li>
+        <li><a href="#projekty">Narzędzia</a></li>
+        <li><a href="#kontakt" class="cta">Porozmawiajmy</a></li>
       </ul>
     </nav>
     <button class="burger" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button>
   </div>
+  <div class="progress" id="progress" role="progressbar" aria-label="Postęp czytania strony" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
 </header>
 <div class="mobile" id="mobile-nav">
-  <a href="#about">O mnie</a>
-  <a href="#expertise">Kompetencje</a>
-  <a href="#references">Doświadczenie</a>
-  <a href="#training">Szkolenia</a>
-  <a href="#projects">Projekty</a>
-  <a href="#contact">Kontakt</a>
+  <a href="#oferta">Współpraca</a>
+  <a href="#szkolenia">Szkolenia</a>
+  <a href="#doswiadczenie">Doświadczenie</a>
+  <a href="#o-mnie">O mnie</a>
+  <a href="#projekty">Narzędzia</a>
+  <a href="#kontakt">Porozmawiajmy</a>
 </div>
 
 <main id="main">
@@ -226,147 +262,172 @@ footer a:hover { color: var(--fg); }
 <section class="hero" aria-labelledby="hero-title">
   <div class="wrap">
     <div>
-      <h1 id="hero-title">AI <span class="b">w praktyce</span>, od strategii do wdrożenia</h1>
-      <p class="lead">Sztuczna inteligencja w biznesie, administracji i edukacji. Szkolenia, doradztwo i wdrożenia dopasowane do realiów organizacji.</p>
+      <p class="label" style="--c:var(--coral)">Andrzej Jankowski · szkolenia i wdrożenia AI</p>
+      <h1 id="hero-title">Zrozumieć AI. <span class="b">Zastosować</span> w praktyce.</h1>
+      <p class="lead">Uczę zespoły korzystać z AI. Pomagam firmom i instytucjom opracować strategię, a z zespołem Quantica Lab wdrażam rozwiązania do pracy z wiedzą i automatyzacji procesów.</p>
       <div class="actions">
-        <a class="btn primary" href="#contact">Napisz do mnie</a>
-        <a class="btn ghost" href="#training">Zobacz szkolenia</a>
+        <a class="btn primary" href="#kontakt">Porozmawiajmy o współpracy</a>
+        <a class="btn ghost" href="#oferta">Sprawdź, w czym pomagam</a>
       </div>
     </div>
-    <div class="stack" aria-hidden="true">
-      <span class="blk a"></span><span class="blk b"></span><span class="blk c"></span><span class="blk d"></span>
-      <img src="me.webp" alt="" width="1000" height="1000" fetchpriority="high">
-    </div>
+    <figure class="stack">
+      <span class="blk a" aria-hidden="true"></span><span class="blk b" aria-hidden="true"></span><span class="blk c" aria-hidden="true"></span><span class="blk d" aria-hidden="true"></span>
+      <img src="me.webp" alt="Andrzej Jankowski" width="1000" height="1000" fetchpriority="high">
+      <figcaption><strong>Andrzej Jankowski</strong><span>Edukator AI, współzałożyciel Quantica Lab</span></figcaption>
+    </figure>
   </div>
 </section>
 
 <!-- ─── Proof strip ─── -->
-<div class="proof">
+<div class="proof" role="region" aria-label="Doświadczenie w skrócie">
   <div class="wrap">
-    <div><b><i style="background:var(--sky)"></i>Intel</b>współpraca z europejskimi firmami rozwijającymi systemy AI</div>
-    <div><b><i style="background:var(--sun)"></i>Akademia Leona Koźmińskiego</b>współtwórca i wykładowca Biznes.AI oraz Prawa Sztucznej Inteligencji</div>
-    <div><b><i style="background:var(--mint)"></i>Ministerstwo Cyfryzacji</b>współautor raportu o uczeniu ustawicznym w zakresie AI</div>
-    <div><b><i style="background:var(--coral)"></i>Od 2018</b>szkolenia z AI dla ministerstw, firm, prawników i nauczycieli</div>
+    <div><b><i style="background:var(--sky)"></i>Intel</b>Wieloletnia współpraca z europejskimi firmami rozwijającymi systemy AI.</div>
+    <div><b><i style="background:var(--sun)"></i>Akademia Leona Koźmińskiego</b>Współtworzenie programów studiów podyplomowych i prowadzenie zajęć.</div>
+    <div><b><i style="background:var(--mint)"></i>Szkolenia od 2018 roku</b>Praca z firmami, administracją publiczną, prawnikami i nauczycielami.</div>
   </div>
 </div>
 
-<!-- ─── About ─── -->
-<section class="about" id="about" aria-labelledby="about-title">
-  <div class="wrap">
-    <h2 id="about-title">Kim jestem</h2>
-    <div>
-      <p>Pomagam firmom i instytucjom wykorzystywać sztuczną inteligencję do rozwiązywania konkretnych problemów. Łączę doświadczenie technologiczne i biznesowe z praktyką wdrożeń oraz edukacją.</p>
-      <p>Przez wiele lat byłem związany z firmą <strong>Intel</strong>, gdzie odpowiadałem za współpracę z europejskimi przedsiębiorstwami rozwijającymi systemy AI.</p>
-      <p>Dziś jestem współzałożycielem <span class="mark">Quantica Lab</span> i prowadzę projekty wdrożeń AI. Wspieram organizacje, w szczególności polskie firmy, w budowaniu strategii AI i przechodzeniu od pierwszych pomysłów do działających rozwiązań. Wraz z zespołem rozwijamy własne produkty, automatyzujemy procesy i pomagamy lepiej wykorzystywać wiedzę zgromadzoną w firmach. Dbamy przy tym o bezpieczeństwo danych i możliwość wdrażania systemów we własnej infrastrukturze klienta.</p>
-      <p>Jestem współtwórcą i wykładowcą studiów podyplomowych Biznes.AI oraz Prawo Sztucznej Inteligencji na <strong>Akademii Leona Koźmińskiego</strong>. Łączę tam perspektywę biznesową, technologiczną i regulacyjną. Prowadzę również szkolenia i warsztaty dla firm i instytucji, pomagając zespołom i kadrze zarządzającej świadomie korzystać z AI w codziennej pracy.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ─── Competencies ─── -->
-<section id="expertise" aria-labelledby="expertise-title">
-  <div class="wrap">
-    <h2 id="expertise-title">W czym pomagam</h2>
-    <div class="bento">
-      <div class="cell big sky"><h3>Szkolenia</h3><p>Warsztaty i programy szkoleniowe dla kadry zarządzającej, zespołów technicznych i użytkowników końcowych. Od kilkugodzinnych warsztatów po wielodniowe programy.</p></div>
-      <div class="cell sun"><h3>Strategia AI</h3><p>Projektowanie strategii transformacji cyfrowej z wykorzystaniem sztucznej inteligencji.</p></div>
-      <div class="cell"><span class="dot"></span><h3>Generatywna AI</h3><p>Modele językowe, systemy generatywne i ich praktyczne zastosowania w organizacjach.</p></div>
-      <div class="cell mint"><h3>AI w biznesie</h3><p>Wdrożenia AI dopasowane do realiów firmy – od audytu po produkcyjne rozwiązania.</p></div>
-      <div class="cell"><span class="dot" style="background:var(--sky)"></span><h3>Prawo i AI</h3><p>AI Act, RODO i praktyka prawnicza – programy dla prawników na Akademii Leona Koźmińskiego.</p></div>
-    </div>
-    <div class="tags">
-      <span>AI dla sektora prawnego</span><span>AI w edukacji</span><span>AI w administracji</span><span>Projektowanie systemów AI</span>
-    </div>
-  </div>
-</section>
-
-<!-- ─── Experience ─── -->
-<section class="exp" id="references" aria-labelledby="references-title">
+<!-- ─── Offer ─── -->
+<section id="oferta" aria-labelledby="offer-title">
   <div class="wrap">
     <div class="head">
-      <h2 id="references-title">Doświadczenie</h2>
-      <p>Od <strong>2018 roku</strong> projektuję i prowadzę szkolenia z AI. Pracowałem z wyższymi urzędnikami ministerstw, kadrą menedżerską, prawnikami, nauczycielami i studentami.</p>
+      <div><p class="label" style="--c:var(--sky)">Współpraca</p><h2 id="offer-title">Czego potrzebuje Twoja organizacja?</h2></div>
+      <p class="sub">Szkolenie dla zespołu, wsparcie w decyzjach czy praca nad wdrożeniem? To trzy różne potrzeby. Każda wymaga innego zakresu współpracy.</p>
     </div>
-    <div class="grid">
-      <article style="--c:var(--sky)"><h3>Studia podyplomowe</h3><p>Akademia Leona Koźmińskiego – współtwórca i wykładowca trzech programów: Biznes.AI, Prawo Sztucznej Inteligencji oraz Szkoła IT dla Prawników.</p></article>
-      <article style="--c:var(--sun)"><h3>Administracja publiczna</h3><p>Wielodniowe warsztaty AI dla kadry kierowniczej Ministerstwa Edukacji Narodowej, Ministerstwa Rozwoju i Technologii oraz organizacji Smart Africa.</p></article>
-      <article style="--c:var(--mint)"><h3>Firmy i korporacje</h3><p>Dedykowane programy szkoleniowe we współpracy z Asseco Data Systems, Think Tank, Koalicją na Rzecz Polskich Innowacji – dla branży produkcyjnej, doradczej, IT i logistycznej.</p></article>
-      <article style="--c:var(--coral)"><h3>Środowisko prawnicze</h3><p>Warsztaty dla Okręgowej Izby Radców Prawnych w Łodzi oraz cykle edukacyjne dla prawników w ramach programów akademickich.</p></article>
-      <article style="--c:var(--fg)"><h3>Edukacja i nauczyciele</h3><p>Szkolenia dla nauczycieli z wykorzystania AI w szkole – we współpracy z OEIiZK oraz Ministerstwem Edukacji Narodowej.</p></article>
+    <div class="services">
+      <article class="service sky" data-service="szkolenia">
+        <span class="kind">Kompetencje zespołu</span>
+        <h3>Szkolenia i warsztaty</h3>
+        <p>Dla osób, które chcą rozumieć AI i korzystać z niej w codziennej pracy, oraz zespołów przygotowujących wdrożenia.</p>
+        <ul><li>Program dla menedżerów, specjalistów lub zespołów technicznych.</li><li>Poziom i tematy dopasowane do uczestników.</li><li>Warsztaty stacjonarne lub zdalne.</li></ul>
+        <a href="#szkolenia">Zobacz zakres szkoleń</a>
+      </article>
+      <article class="service sun" data-service="strategia">
+        <span class="kind">Decyzje i kierunek</span>
+        <h3>Doradztwo i strategia AI</h3>
+        <p>Dla organizacji, które szukają zastosowań AI i potrzebują wsparcia w wyborze rozwiązań oraz przygotowaniu do wdrożenia.</p>
+        <ul><li>Ocena gotowości organizacji do wykorzystania AI.</li><li>Wybór i ocena rozwiązań.</li><li>Strategia uwzględniająca realia firmy.</li></ul>
+        <a href="mailto:andrzej@edulab.dev?subject=Konsultacja%20dotycz%C4%85ca%20strategii%20AI">Zapytaj o doradztwo</a>
+      </article>
+      <article class="service mint" data-service="wdrozenia">
+        <span class="kind">Działające rozwiązania</span>
+        <h3>Wdrożenia z Quantica Lab</h3>
+        <p>Dla firm, które chcą automatyzować procesy i lepiej korzystać z wiedzy zgromadzonej w dokumentach i systemach.</p>
+        <ul><li>Od audytu do rozwiązania produkcyjnego.</li><li>Modele językowe i systemy generatywne.</li><li>Bezpieczeństwo danych i możliwość wdrożenia we własnej infrastrukturze.</li></ul>
+        <a href="mailto:andrzej@edulab.dev?subject=Rozmowa%20o%20wdro%C5%BCeniu%20AI">Porozmawiaj o wdrożeniu</a>
+      </article>
     </div>
   </div>
 </section>
 
 <!-- ─── Training ─── -->
-<section class="train" id="training" aria-labelledby="training-title">
+<section class="train" id="szkolenia" aria-labelledby="training-title">
   <div class="wrap">
-    <h2 id="training-title">Szkolenia</h2>
-    <p class="sub">Program jest zawsze dostosowany do potrzeb organizacji i poziomu zaawansowania uczestników.</p>
-    <div class="grid">
-      <article>
-        <div class="ic" style="background:var(--sky)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-        <div><h3>Program</h3><p>Przygotowuję i prowadzę szkolenia z zakresu sztucznej inteligencji dla firm na każdym etapie transformacji – od pierwszych kroków po wdrożenia produkcyjne.</p></div>
-      </article>
-      <article>
-        <div class="ic" style="background:var(--sun)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <div><h3>Dla kogo?</h3><p>Szkolenia kieruję do trzech grup: kadry zarządzającej podejmującej decyzje strategiczne, zespołów technicznych wdrażających rozwiązania AI oraz użytkowników końcowych pracujących z systemami AI na co dzień.</p></div>
-      </article>
-      <article>
-        <div class="ic" style="background:var(--mint)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <div><h3>Tematyka</h3><p>Transformacja cyfrowa i gotowość firmy na AI, wybór i ocena rozwiązań, techniczne zasady działania modeli językowych, aspekty prawne – w tym AI Act i RODO.</p></div>
-      </article>
-      <article>
-        <div class="ic" style="background:var(--coral)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-        <div><h3>Forma</h3><p>Stacjonarnie lub zdalnie, od kilkugodzinnych warsztatów po wielodniowe programy. Każde szkolenie kończy się materiałami do pracy własnej i możliwością follow-upu.</p></div>
-      </article>
+    <div class="intro">
+      <p class="label" style="--c:var(--sun)">Szkolenia</p>
+      <h2 id="training-title">Inne role. Inne pytania o AI.</h2>
+      <p>Osoba zarządzająca potrzebuje podstaw do decyzji. Zespół techniczny musi rozumieć działanie modeli. Osoby korzystające z AI na co dzień potrzebują praktyki.</p>
+      <div class="format"><strong>Forma dopasowana do zespołu</strong><p>Stacjonarnie lub zdalnie. Od kilkugodzinnych warsztatów po wielodniowe programy. Materiały do pracy własnej i możliwość dalszych konsultacji po szkoleniu.</p></div>
+    </div>
+    <div>
+      <div class="acc">
+        <details open data-component="training" data-state="open"><summary>Dla kadry zarządzającej</summary><div class="acc-body"><p><strong>Punkt wyjścia:</strong> jak ocenić gotowość firmy na AI i wybrać rozwiązania odpowiadające jej potrzebom?</p><p><strong>Zakres:</strong> strategia AI, transformacja cyfrowa, wybór i ocena rozwiązań oraz uwarunkowania prawne.</p><p><strong>Cel nauki:</strong> rozumieć możliwości i ograniczenia AI przy podejmowaniu decyzji o jej zastosowaniu.</p></div></details>
+        <details data-component="training" data-state="closed"><summary>Dla zespołów technicznych</summary><div class="acc-body"><p><strong>Punkt wyjścia:</strong> jak działają modele językowe i co trzeba uwzględnić przy projektowaniu systemu AI?</p><p><strong>Zakres:</strong> techniczne zasady działania modeli, systemy generatywne, ocena rozwiązań i przygotowanie do wdrożeń.</p><p><strong>Cel nauki:</strong> rozumieć działanie modeli i ich rolę w projektowanym rozwiązaniu.</p></div></details>
+        <details data-component="training" data-state="closed"><summary>Dla osób pracujących z AI</summary><div class="acc-body"><p><strong>Punkt wyjścia:</strong> jak wykorzystywać generatywną AI w zadaniach swojego zespołu?</p><p><strong>Zakres:</strong> praktyczne zastosowania modeli językowych, możliwości i ograniczenia narzędzi oraz zasady korzystania z AI w organizacji.</p><p><strong>Cel nauki:</strong> świadomie korzystać z systemów AI w codziennej pracy.</p></div></details>
+        <details data-component="training" data-state="closed"><summary>Prawo, administracja i edukacja</summary><div class="acc-body"><p>Prowadzę również programy dla prawników, administracji publicznej i nauczycieli. Tematy obejmują zastosowania AI w danej dziedzinie oraz aspekty prawne, w tym AI Act i RODO.</p><p>To oferta edukacyjna. Zakres szkolenia ustalamy w odniesieniu do pracy uczestników.</p></div></details>
+      </div>
+      <div class="cta"><a class="btn primary" href="mailto:andrzej@edulab.dev?subject=Szkolenie%20AI%20dla%20zespo%C5%82u">Zapytaj o szkolenie dla zespołu</a></div>
     </div>
   </div>
 </section>
 
-<!-- ─── Projects ─── -->
-<section class="proj" id="projects" aria-labelledby="projects-title">
+<!-- ─── Experience ─── -->
+<section class="exp" id="doswiadczenie" aria-labelledby="experience-title">
   <div class="wrap">
-    <h2 id="projects-title">Mikroprojekty</h2>
-    <p class="sub">Małe narzędzia, które pokazują AI w działaniu – bez chmury i bez kodu.</p>
+    <div class="head">
+      <div><p class="label" style="--c:var(--mint)">Doświadczenie</p><h2 id="experience-title">Z kim pracowałem i w jakim zakresie.</h2></div>
+      <p class="sub">Przykłady pracy edukacyjnej: od programów akademickich po warsztaty dla instytucji i firm.</p>
+    </div>
     <div class="grid">
-      <a href="https://workszop.org" target="_blank" rel="noopener">
+      <article style="--c:var(--sky)"><p class="label">Studia podyplomowe</p><h3>Akademia Leona Koźmińskiego</h3><p>Współtworzyłem i prowadzę zajęcia w trzech programach: Biznes.AI, Prawo Sztucznej Inteligencji oraz Szkoła IT dla Prawników. Łączę perspektywę biznesową, technologiczną i regulacyjną.</p></article>
+      <article style="--c:var(--sun)"><p class="label">Administracja publiczna</p><h3>Warsztaty dla kadry kierowniczej</h3><p>Prowadziłem wielodniowe warsztaty AI dla Ministerstwa Edukacji Narodowej, Ministerstwa Rozwoju i Technologii oraz organizacji Smart Africa.</p></article>
+      <article style="--c:var(--mint)"><p class="label">Firmy i organizacje</p><h3>Programy dla różnych branż</h3><p>Przygotowywałem programy szkoleniowe we współpracy z Asseco Data Systems, Think Tank i Koalicją na Rzecz Polskich Innowacji. Obejmowały branżę produkcyjną, doradczą, IT i logistyczną.</p></article>
+      <article style="--c:var(--coral)"><p class="label">Praktyka zawodowa</p><h3>Prawnicy i nauczyciele</h3><p>Prowadziłem warsztaty dla Okręgowej Izby Radców Prawnych w Łodzi oraz szkolenia dla nauczycieli we współpracy z OEIiZK i Ministerstwem Edukacji Narodowej.</p></article>
+      <article style="--c:var(--fg)"><p class="label">Edukacja o AI</p><h3>Uczenie ustawiczne</h3><p>Jestem współautorem raportu o uczeniu ustawicznym w zakresie sztucznej inteligencji dla Ministerstwa Cyfryzacji.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ─── About ─── -->
+<section class="about" id="o-mnie" aria-labelledby="about-title">
+  <div class="wrap">
+    <div><p class="label" style="--c:var(--coral)">O mnie</p><h2 id="about-title">Edukacja oparta na praktyce.</h2></div>
+    <div>
+      <p>Nazywam się Andrzej Jankowski. Łączę szkolenia i doradztwo z pracą nad wdrożeniami AI.</p>
+      <p>Przez wiele lat byłem związany z firmą <strong>Intel</strong>, gdzie odpowiadałem za współpracę z europejskimi przedsiębiorstwami rozwijającymi systemy AI. Dziś jestem współzałożycielem <span class="mark">Quantica Lab</span>. Z zespołem rozwijamy własne produkty, automatyzujemy procesy i pomagamy firmom korzystać z ich wiedzy.</p>
+      <p>Od 2018 roku projektuję i prowadzę szkolenia z AI. Uczę także na <strong>Akademii Leona Koźmińskiego</strong>. W pracy z zespołami łączę wiedzę technologiczną z pytaniami o zastosowanie AI w organizacji.</p>
+      <div class="note"><strong>Edulab i Quantica Lab</strong>Edulab to moja strona o szkoleniach, doradztwie i projektach. Wdrożenia realizuję z zespołem Quantica Lab.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Tools ─── -->
+<section class="proj" id="projekty" aria-labelledby="projects-title">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="label" style="--c:var(--sky)">Narzędzia i eksperymenty</p><h2 id="projects-title">Sprawdź AI na własnym przykładzie.</h2></div>
+      <p class="sub">Te narzędzia możesz wypróbować w przeglądarce. Pokazują różne zastosowania: rozpoznawanie obrazów, tworzenie prezentacji i małe gry.</p>
+    </div>
+    <div class="grid">
+      <article>
         <span class="ic" style="background:var(--sky)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
-        <b>KlockiAI</b>
-        <p>Wytrenuj własny model rozpoznawania obrazów w przeglądarce – bez kodu, bez chmury.</p>
-        <span>workszop.org</span>
-      </a>
-      <a href="https://mobi.workszop.org" target="_blank" rel="noopener">
-        <span class="ic" style="background:var(--coral)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
-        <b>KlockiAI Mobile</b>
-        <p>Mobilna wersja KlockiAI. Smartfon jako laboratorium AI, w całości na urządzeniu.</p>
-        <span>mobi.workszop.org</span>
-      </a>
-      <a href="slidegen/">
+        <p class="label">Rozpoznawanie obrazów</p>
+        <h3>KlockiAI</h3>
+        <p>Wytrenuj własny model rozpoznawania obrazów bez pisania kodu. Wersja mobilna pozwala wykorzystać do tego smartfon.</p>
+        <p class="privacy">Model działa na urządzeniu, bez przetwarzania w chmurze.</p>
+        <div class="links"><a class="link" href="https://workszop.org" target="_blank" rel="noopener noreferrer">Otwórz KlockiAI<span class="sr-only">, w nowej karcie</span></a><a class="link" href="https://mobi.workszop.org" target="_blank" rel="noopener noreferrer">Wersja mobilna<span class="sr-only">, w nowej karcie</span></a></div>
+      </article>
+      <article>
         <span class="ic" style="background:var(--mint)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="7" y1="9" x2="13" y2="9"/><line x1="7" y1="12" x2="17" y2="12"/></svg></span>
-        <b>Slidegen</b>
-        <p>Zamień tekst, markdown lub PDF w gotową prezentację. Działa w przeglądarce, z wybranym modelem AI.</p>
-        <span>andrzej.ai/slidegen</span>
-      </a>
-      <a href="https://beehonest.eu" target="_blank" rel="noopener">
+        <p class="label">Praca z treścią</p>
+        <h3>Slidegen</h3>
+        <p>Zamień tekst, Markdown lub PDF w prezentację z pomocą wybranego modelu AI.</p>
+        <p class="privacy">Interfejs działa w przeglądarce. Generowanie korzysta z usług zewnętrznego dostawcy AI, nie wyłącznie z Twojego urządzenia.</p>
+        <div class="links"><a class="link" href="slidegen/">Otwórz Slidegen</a></div>
+      </article>
+      <article>
+        <span class="ic" style="background:var(--coral)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3H5a2 2 0 0 0-2 2v4"/><path d="M15 3h4a2 2 0 0 1 2 2v4"/><path d="M3 15v4a2 2 0 0 0 2 2h4"/><path d="M21 15v4a2 2 0 0 1-2 2h-4"/><circle cx="12" cy="12" r="3"/></svg></span>
+        <p class="label">Gra</p>
+        <h3>Am I in a Story?</h3>
+        <p>Quiz o archetypach fabularnych w stylu terminala z końca lat 80. Odpowiadasz na 20 pytań o codzienne zdarzenia i dowiadujesz się, w jakiej historii żyjesz.</p>
+        <p class="privacy">Działa w całości w przeglądarce. Rozrywka, nie diagnoza.</p>
+        <div class="links"><a class="link" href="hero/">Otwórz grę</a></div>
+      </article>
+      <article>
         <span class="ic" style="background:var(--sun)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
-        <b>BeeHonest</b>
-        <p>BeeHonest to mała gra, która pozwala się lepiej poznać.</p>
-        <span>beehonest.eu</span>
-      </a>
+        <p class="label">Poza narzędziami AI</p>
+        <h3>BeeHonest</h3>
+        <p>Mała gra, która pozwala się lepiej poznać.</p>
+        <div class="links"><a class="link" href="https://beehonest.eu" target="_blank" rel="noopener noreferrer">Otwórz BeeHonest<span class="sr-only">, w nowej karcie</span></a></div>
+      </article>
     </div>
   </div>
 </section>
 
 <!-- ─── Contact ─── -->
-<section class="contact" id="contact" aria-labelledby="contact-title">
+<section class="contact" id="kontakt" aria-labelledby="contact-title">
   <div class="wrap">
     <div>
-      <h2 id="contact-title">Porozmawiajmy</h2>
-      <p>Szukasz eksperta AI do konsultacji, szkolenia lub współpracy przy wdrożeniu?</p>
+      <p class="label" style="--c:var(--sun)">Kontakt</p>
+      <h2 id="contact-title">Z czym chcesz ruszyć dalej?</h2>
+      <p>Napisz o szkoleniu, decyzji dotyczącej AI lub pomyśle na wdrożenie.</p>
+      <p>Nie potrzebujesz gotowej specyfikacji. Wystarczy krótki opis sytuacji.</p>
     </div>
-    <div class="links">
+    <div class="panel">
+      <strong>W pierwszej wiadomości warto podać:</strong>
+      <ul><li>Co chcesz zmienić lub jaki problem rozwiązać.</li><li>Jakiego zespołu lub organizacji dotyczy temat.</li><li>Jaki termin bierzesz pod uwagę, jeśli jest już znany.</li></ul>
       <a class="btn mail" href="mailto:andrzej@edulab.dev">andrzej@edulab.dev</a>
-      <a class="btn li" href="https://www.linkedin.com/in/crazyai" target="_blank" rel="noopener">LinkedIn</a>
+      <p>Wolisz LinkedIn? <a href="https://www.linkedin.com/in/crazyai" target="_blank" rel="noopener noreferrer">Napisz do mnie tam<span class="sr-only">, otwiera się w nowej karcie</span></a>.</p>
     </div>
   </div>
 </section>
@@ -375,41 +436,81 @@ footer a:hover { color: var(--fg); }
 <!-- ─── Footer ─── -->
 <footer>
   <div class="wrap">
-    <a class="logo" href="#" style="font-size:20px"><img src="horse.png" alt="" width="38" height="30" style="height:30px">edulab</a>
-    <nav aria-label="Stopka">
-      <a href="#about">O mnie</a><a href="#expertise">Kompetencje</a><a href="#training">Szkolenia</a><a href="#contact">Kontakt</a>
-    </nav>
-    <p>&copy; 2026 Edulab. Andrzej Jankowski.</p>
+    <a class="logo" href="#main" style="font-size:20px"><img src="horse.png" alt="" width="38" height="30" style="height:30px">edulab</a>
+    <nav aria-label="Stopka"><a href="#o-mnie">O mnie</a><a href="#projekty">Narzędzia</a><a href="#kontakt">Kontakt</a><a href="#main">Wróć na górę</a></nav>
+    <p>&copy; 2026 Edulab · Andrzej Jankowski</p>
   </div>
 </footer>
+<p id="status" aria-live="polite" role="status"></p>
 
 <script>
+// ─── Constants ───
+const SPY_IDS = ['oferta', 'szkolenia', 'doswiadczenie', 'o-mnie', 'projekty', 'kontakt'];
+
+// ─── State ───
+const App = { state: { menuOpen: false, progress: 0 }, check: null };
+
 // ─── DOM refs ───
 const navbar = document.getElementById('navbar');
 const navToggle = document.getElementById('nav-toggle');
 const mobileNav = document.getElementById('mobile-nav');
+const progress = document.getElementById('progress');
+const status = document.getElementById('status');
 const navLinks = document.querySelectorAll('.nav ul a[href^="#"], #mobile-nav a[href^="#"]');
-const SPY_IDS = ['about', 'expertise', 'references', 'training', 'projects', 'contact'];
+const groups = [...document.querySelectorAll('[data-component="training"]')];
 
 // ─── Helpers ───
-const setMenu = (open) => {
+const setActive = (id) => navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${id}`));
+function updateProgress() {
+  const distance = document.documentElement.scrollHeight - innerHeight;
+  App.state.progress = distance > 0 ? Math.round(Math.min(1, Math.max(0, scrollY / distance)) * 100) : 100;
+  progress.style.width = `${App.state.progress}%`;
+  progress.setAttribute('aria-valuenow', String(App.state.progress));
+}
+function checkContract() {
+  const ids = [...document.querySelectorAll('[id]')].map(n => n.id);
+  const checks = {
+    sections: SPY_IDS.every(id => document.getElementById(id)),
+    uniqueIds: new Set(ids).size === ids.length,
+    heading: document.querySelectorAll('h1').length === 1,
+    servicePaths: document.querySelectorAll('[data-service]').length === 3,
+    anchors: [...document.querySelectorAll('a[href^="#"]')].every(a => document.getElementById(a.hash.slice(1))),
+    menu: navbar.dataset.menu === (App.state.menuOpen ? 'open' : 'closed') && navToggle.getAttribute('aria-expanded') === String(App.state.menuOpen),
+    disclosures: groups.every(g => g.dataset.state === (g.open ? 'open' : 'closed')),
+    progress: Number(progress.getAttribute('aria-valuenow')) === App.state.progress
+  };
+  return { pass: Object.values(checks).every(Boolean), checks };
+}
+
+// ─── Render ───
+function render() {
+  const open = App.state.menuOpen;
   mobileNav.classList.toggle('open', open);
+  navbar.dataset.menu = open ? 'open' : 'closed';
   navToggle.setAttribute('aria-expanded', String(open));
   document.body.style.overflow = open ? 'hidden' : '';
-};
-const setActive = (id) => navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${id}`));
+}
+const setMenu = (open, returnFocus = false) => { App.state.menuOpen = open; render(); if (returnFocus) navToggle.focus(); };
 
 // ─── Listeners ───
-window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
-navToggle.addEventListener('click', () => setMenu(!mobileNav.classList.contains('open')));
+window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', scrollY > 20); updateProgress(); }, { passive: true });
+window.addEventListener('resize', updateProgress);
+navToggle.addEventListener('click', () => setMenu(!App.state.menuOpen));
 mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
-document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && App.state.menuOpen) setMenu(false, true); });
+groups.forEach(g => g.addEventListener('toggle', () => { g.dataset.state = g.open ? 'open' : 'closed'; }));
 
-// ─── Init: scroll spy ───
+// ─── Init ───
 const spy = new IntersectionObserver(entries => {
   entries.forEach(en => { if (en.isIntersecting) setActive(en.target.id); });
 }, { rootMargin: '-40% 0px -55% 0px' });
 SPY_IDS.forEach(id => { const el = document.getElementById(id); if (el) spy.observe(el); });
+App.check = checkContract;
+window.App = App;
+render();
+updateProgress();
+document.body.dataset.ready = 'true';
+status.textContent = 'Strona gotowa. Menu na telefonie można zamknąć klawiszem Escape.';
 </script>
 </body>
 </html>
