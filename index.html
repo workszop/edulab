@@ -78,7 +78,6 @@ h3 { font-weight: 700; font-size: 22px; letter-spacing: -0.02em; }
 .nav ul a:hover, .nav ul a.active { color: var(--fg); border-bottom-color: var(--sun); }
 .nav ul a.cta { background: var(--fg); color: var(--white); padding: 10px 18px; border-radius: 12px; border: 0; }
 .nav ul a.cta:hover { background: var(--sky); }
-.progress { position: absolute; left: 0; bottom: -1px; height: 3px; width: 0; background: var(--sun); }
 .burger { display: none; background: none; border: 0; padding: 8px; cursor: pointer; }
 .burger span { display: block; width: 24px; height: 2.5px; background: var(--fg); border-radius: 2px; margin: 5px 0; transition: transform .3s var(--ease), opacity .3s; }
 .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
@@ -236,7 +235,6 @@ footer a:hover { color: var(--fg); }
     </nav>
     <button class="burger" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button>
   </div>
-  <div class="progress" id="progress" role="progressbar" aria-label="Postęp czytania strony" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
 </header>
 <div class="mobile" id="mobile-nav">
   <a href="#oferta">Współpraca</a>
@@ -427,25 +425,18 @@ footer a:hover { color: var(--fg); }
 const SPY_IDS = ['oferta', 'szkolenia', 'doswiadczenie', 'o-mnie', 'projekty', 'kontakt'];
 
 // ─── State ───
-const App = { state: { menuOpen: false, progress: 0 }, check: null };
+const App = { state: { menuOpen: false }, check: null };
 
 // ─── DOM refs ───
 const navbar = document.getElementById('navbar');
 const navToggle = document.getElementById('nav-toggle');
 const mobileNav = document.getElementById('mobile-nav');
-const progress = document.getElementById('progress');
 const status = document.getElementById('status');
 const navLinks = document.querySelectorAll('.nav ul a[href^="#"], #mobile-nav a[href^="#"]');
 const groups = [...document.querySelectorAll('[data-component="training"]')];
 
 // ─── Helpers ───
 const setActive = (id) => navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${id}`));
-function updateProgress() {
-  const distance = document.documentElement.scrollHeight - innerHeight;
-  App.state.progress = distance > 0 ? Math.round(Math.min(1, Math.max(0, scrollY / distance)) * 100) : 100;
-  progress.style.width = `${App.state.progress}%`;
-  progress.setAttribute('aria-valuenow', String(App.state.progress));
-}
 function checkContract() {
   const ids = [...document.querySelectorAll('[id]')].map(n => n.id);
   const checks = {
@@ -455,8 +446,7 @@ function checkContract() {
     servicePaths: document.querySelectorAll('[data-service]').length === 3,
     anchors: [...document.querySelectorAll('a[href^="#"]')].every(a => document.getElementById(a.hash.slice(1))),
     menu: navbar.dataset.menu === (App.state.menuOpen ? 'open' : 'closed') && navToggle.getAttribute('aria-expanded') === String(App.state.menuOpen),
-    disclosures: groups.every(g => g.dataset.state === (g.open ? 'open' : 'closed')),
-    progress: Number(progress.getAttribute('aria-valuenow')) === App.state.progress
+    disclosures: groups.every(g => g.dataset.state === (g.open ? 'open' : 'closed'))
   };
   return { pass: Object.values(checks).every(Boolean), checks };
 }
@@ -472,8 +462,7 @@ function render() {
 const setMenu = (open, returnFocus = false) => { App.state.menuOpen = open; render(); if (returnFocus) navToggle.focus(); };
 
 // ─── Listeners ───
-window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', scrollY > 20); updateProgress(); }, { passive: true });
-window.addEventListener('resize', updateProgress);
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', scrollY > 20), { passive: true });
 navToggle.addEventListener('click', () => setMenu(!App.state.menuOpen));
 mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && App.state.menuOpen) setMenu(false, true); });
@@ -487,7 +476,6 @@ SPY_IDS.forEach(id => { const el = document.getElementById(id); if (el) spy.obse
 App.check = checkContract;
 window.App = App;
 render();
-updateProgress();
 document.body.dataset.ready = 'true';
 status.textContent = 'Strona gotowa. Menu na telefonie można zamknąć klawiszem Escape.';
 </script>
