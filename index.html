@@ -110,13 +110,6 @@ h1 .b { display: inline-block; padding: 0 .18em; border-radius: .18em; color: va
 .blk { animation: drop .7s var(--ease) both; }
 .blk.a { animation-delay: .1s; } .blk.b { animation-delay: .25s; } .blk.c { animation-delay: .4s; } .blk.d { animation-delay: .55s; }
 
-/* ─── Proof strip ─── */
-.proof { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 0; }
-.proof .wrap { display: grid; grid-template-columns: repeat(3, 1fr); }
-.proof div { padding: 22px 24px 22px 0; font-size: 15px; color: var(--fg-2); line-height: 1.4; }
-.proof b { display: block; color: var(--fg); font-weight: 700; font-size: 17px; }
-.proof i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; vertical-align: 1px; }
-
 /* ─── Offer: three paths ─── */
 .services { margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .service { border-radius: var(--r-lg); padding: 28px; display: flex; flex-direction: column; gap: 14px; background: var(--white); border: 1px solid var(--line); }
@@ -213,9 +206,6 @@ footer a:hover { color: var(--fg); }
   .stack img { width: 100%; height: auto; max-height: 340px; }
   .stack figcaption { white-space: normal; width: calc(100% - 32px); }
   .blk.a { width: 80px; height: 80px; } .blk.c { width: 110px; height: 44px; }
-  .proof .wrap { grid-template-columns: 1fr; }
-  .proof div { padding: 16px 0; border-bottom: 1px solid var(--line); }
-  .proof div:last-child { border-bottom: 0; }
   .services, .exp .grid, .proj .grid { grid-template-columns: 1fr; }
   .contact .wrap { padding: 36px 24px; gap: 28px; }
   .contact .panel .btn.mail { width: 100%; justify-content: center; }
@@ -278,14 +268,6 @@ footer a:hover { color: var(--fg); }
   </div>
 </section>
 
-<!-- ─── Proof strip ─── -->
-<div class="proof" role="region" aria-label="Doświadczenie w skrócie">
-  <div class="wrap">
-    <div><b><i style="background:var(--sky)"></i>Intel</b>Wieloletnia współpraca z europejskimi firmami rozwijającymi systemy AI.</div>
-    <div><b><i style="background:var(--sun)"></i>Akademia Leona Koźmińskiego</b>Współtworzenie programów studiów podyplomowych i prowadzenie zajęć.</div>
-    <div><b><i style="background:var(--mint)"></i>Szkolenia od 2018 roku</b>Praca z firmami, administracją publiczną, prawnikami i nauczycielami.</div>
-  </div>
-</div>
 
 <!-- ─── Offer ─── -->
 <section id="oferta" aria-labelledby="offer-title">
